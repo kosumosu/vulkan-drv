@@ -1,0 +1,9 @@
+[Public]
+Object=(Name=Vulkan1Drv.Vulkan1RenderDevice,Class=Class,MetaClass=Engine.RenderDevice,Autodetect=)
+Preferences=(Caption="Rendering",Parent="Advanced Options")
+Preferences=(Caption="Vulkan support",Parent="Rendering",Class=Vulkan1Drv.Vulkan1RenderDevice,Immediate=True)
+
+[D3D11RenderDevice]
+ClassCaption="Vulkan Support"
+AskInstalled=Do you want to use Vulkan?
+AskUse=

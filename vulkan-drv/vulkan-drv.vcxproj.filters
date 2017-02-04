@@ -1,0 +1,1792 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="FX">
+      <UniqueIdentifier>{7b4bda81-0822-4646-bf37-b171bec98a50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{297383a7-07e8-4f88-aad7-64250748af20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Headers">
+      <UniqueIdentifier>{d7694e6b-a9cb-477e-9ac6-a36da71f1662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Headers\Deus Ex">
+      <UniqueIdentifier>{eb72cd8c-1f57-4d31-b949-354fc5137a6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Headers\Unreal Gold">
+      <UniqueIdentifier>{0cd2c405-64f5-42af-8273-b280b6125510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Headers\Unreal Tournament">
+      <UniqueIdentifier>{4170f413-3607-42d2-8978-bf4a3b2b42f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Headers\Unreal_224">
+      <UniqueIdentifier>{841424cf-a804-4b9b-a831-605431b5b06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Headers\Rune">
+      <UniqueIdentifier>{2644a636-5672-478a-88f8-31db47431dbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Headers\Rune_100">
+      <UniqueIdentifier>{c665da21-3fb0-4cf2-a34d-f4ba35521443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Renderers">
+      <UniqueIdentifier>{2a308e4d-e15c-4149-a02f-2cf3d49a777b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="polyflags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\AActor.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\ABrush.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\ACamera.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\AGameReplicationInfo.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\AInventory.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\AMover.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\APawn.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\APlayerPawn.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\APlayerReplicationInfo.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\AZoneInfo.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\Core.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\DbgInfoCpp.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\Engine.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\EngineClasses.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FCodec.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FConfigCacheIni.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FFeedbackContextAnsi.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FFeedbackContextWindows.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FFileManagerAnsi.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FFileManagerGeneric.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FFileManagerLinux.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FFileManagerWindows.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FMallocAnsi.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FMallocDebug.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FMallocWindows.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FOutputDeviceAnsiError.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FOutputDeviceFile.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FOutputDeviceNull.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FOutputDeviceStdout.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FOutputDeviceWindowsError.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\FRiffChunk.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\Palette.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\S3tc.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\SerialNumber.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UDebugInfo.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UExporter.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UFactory.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\ULevelSummary.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnActor.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnArc.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnAudio.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnBits.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnBuild.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnBunch.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnCache.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnCamera.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnChan.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnCId.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnClass.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnCon.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnConn.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnCoreNet.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnCorObj.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnDDraw.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnDemoPenLev.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnDemoRec.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnDynBsp.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnEngine.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnEngineGnuG.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnEngineWin.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnEventManager.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnFile.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnGame.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnGnuG.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnIn.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnLevel.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnMath.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnMem.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnMesh.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnModel.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnName.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnNames.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnNet.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnNetDrv.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnObj.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnObjBas.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnObjVer.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnPenLev.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnPlayer.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnPrim.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnReach.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnRender.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnRenderIterator.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnRenDev.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnScript.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnScrTex.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnStack.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnTemplate.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnTex.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnType.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnUnix.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Engine\Inc\UnURL.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnVcWin32.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\DeusEx\Core\Inc\UnVcWn32SSE.h">
+      <Filter>Game Headers\Deus Ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\AActor.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\ABrush.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\ACamera.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\AMover.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\APawn.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\APlayerPawn.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\AZoneInfo.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\Core.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\Engine.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\EngineClasses.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FCodec.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FConfigCacheIni.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FFeedbackContextAnsi.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FFeedbackContextWindows.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FFileManagerAnsi.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FFileManagerGeneric.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FFileManagerWindows.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FMallocAnsi.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FMallocDebug.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FMallocWindows.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FOutputDeviceAnsiError.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FOutputDeviceFile.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FOutputDeviceNull.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FOutputDeviceStdout.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FOutputDeviceWindowsError.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\FRiffChunk.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\Palette.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\S3tc.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UExporter.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UFactory.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnActor.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnArc.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnAudio.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnBits.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnBuild.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnBunch.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnCache.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnCamera.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnChan.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnCId.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnClass.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnCon.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnConn.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnCoreNet.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnCorObj.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnDDraw.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnDemoPenLev.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnDemoRec.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnDynBsp.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnEngine.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnEngineWin.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnFile.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnGame.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnGnuG.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnIn.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnLevel.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnMath.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnMem.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnMesh.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnModel.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnName.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnNames.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnNet.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnNetDrv.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnObj.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnObjBas.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnObjVer.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnPenLev.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnPlayer.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnPrim.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnReach.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnRender.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnRenderIterator.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnRenDev.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnScript.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnScrTex.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnStack.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\untemplate.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnTex.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnType.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Engine\Inc\UnURL.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_226_Gold\Core\Inc\UnVcWin32.h">
+      <Filter>Game Headers\Unreal Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\AActor.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\AAmmo.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\ABrush.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\ACamera.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\ACarcass.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\afxres.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\AGameReplicationInfo.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\AInventory.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\ALevelInfo.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\AMover.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\APawn.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\APickup.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\APlayerPawn.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\APlayerReplicationInfo.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\AWeapon.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\AZoneInfo.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\Core.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\ENCVAG.H">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\Engine.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\EngineClasses.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FCodec.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FConfigCacheIni.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFeedbackContextAnsi.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFeedbackContextWindows.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFileManagerAnsi.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFileManagerArc.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFileManagerGeneric.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFileManagerLinux.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFileManagerPSX2.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFileManagerPSX2CD.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FFileManagerWindows.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FMallocAnsi.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FMallocDebug.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FMallocWindows.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FOutputDeviceAnsiError.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FOutputDeviceFile.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FOutputDeviceNull.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FOutputDeviceStdout.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FOutputDeviceWindowsError.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\FRiffChunk.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\Palette.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\S3tc.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UExporter.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UFactory.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\ULevelSummary.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\unactor.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnAnim.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnArc.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnAudio.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnBits.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnBuild.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnBunch.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnCache.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnCamera.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnChan.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnCId.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnClass.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnCon.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnConn.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnCoreNative.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnCoreNet.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnCorObj.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnDDraw.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnDemoPenLev.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnDemoRec.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnDownload.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnDynBsp.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnEngine.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnEngineGnuG.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnEngineNative.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnEngineWin.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnFile.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnGame.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnGnuG.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnIn.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnLevel.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnLinker.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnMath.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnMem.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnMesh.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\unmodel.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnMsg.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnName.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnNames.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnNet.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnNetDrv.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnObj.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnObjBas.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnObjVer.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnPenLev.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnPlayer.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnPrim.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnReach.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnRender.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnRenderIterator.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnRenderIteratorSupport.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnRenDev.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnScript.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnScrTex.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnSkeletalMesh.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnStack.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\untemplate.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnTex.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnType.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnUnix.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Engine\Inc\UnURL.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnVcWin32.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\UnrealTournament\Core\Inc\UnVcWn32SSE.h">
+      <Filter>Game Headers\Unreal Tournament</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\AActor.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\ABrush.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\ACamera.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\AMover.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\APawn.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\APlayerPawn.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\AZoneInfo.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\Core.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\Engine.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\EngineClasses.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FCodec.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FConfigCacheIni.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FFeedbackContextAnsi.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FFeedbackContextWindows.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FFileManagerAnsi.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FFileManagerGeneric.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FFileManagerWindows.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FMallocAnsi.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FMallocDebug.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FMallocWindows.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FOutputDeviceAnsiError.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FOutputDeviceFile.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FOutputDeviceNull.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FOutputDeviceStdout.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FOutputDeviceWindowsError.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\FRiffChunk.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\Palette.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\S3tc.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UExporter.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UFactory.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnActor.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnArc.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnAudio.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnBits.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnBuild.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnBunch.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnCache.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnCamera.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnChan.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnCId.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnClass.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnCon.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnConn.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnCoreNet.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnCorObj.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnDDraw.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnDemoPenLev.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnDemoRec.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnDynBsp.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnEngine.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnEngineWin.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnFile.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnGame.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnGnuG.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnIn.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnLevel.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnMath.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnMem.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnMesh.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnModel.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnName.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnNames.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnNet.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnNetDrv.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnObj.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnObjBas.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnObjVer.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnPenLev.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnPlayer.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnPrim.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnReach.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnRender.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnRenderIterator.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnRenDev.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnScript.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnScrTex.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnStack.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnTemplate.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnTex.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnType.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Engine\Inc\UnURL.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Unreal_224\Core\Inc\UnVcWin32.h">
+      <Filter>Game Headers\Unreal_224</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\AActor.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\ABrush.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\ACamera.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\ACarcass.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\AGameReplicationInfo.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\AInventory.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\ALevelInfo.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\AMover.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\AParticleSystem.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\APawn.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\APickup.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\APlayerPawn.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\APlayerReplicationInfo.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\APolyobj.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\AWeapon.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\AZoneInfo.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\Core.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\Engine.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\EngineClasses.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FCodec.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FConfigCacheIni.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FFeedbackContextAnsi.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FFeedbackContextWindows.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FFileManagerAnsi.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FFileManagerGeneric.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FFileManagerLinux.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FFileManagerWindows.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FMallocAnsi.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FMallocDebug.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FMallocWindows.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FOutputDeviceAnsiError.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FOutputDeviceFile.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FOutputDeviceNull.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FOutputDeviceStdout.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FOutputDeviceWindowsError.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\FRiffChunk.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\Palette.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\S3tc.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UExporter.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UFactory.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\ULevelSummary.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnActor.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnArc.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnAudio.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnBits.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnBuild.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnBunch.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnCache.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnCamera.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnChan.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnCId.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnClass.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnCon.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnConn.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnCoreNative.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnCoreNet.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnCorObj.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnDDraw.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnDemoPenLev.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnDemoRec.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnDynBsp.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnEngine.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnEngineGnuG.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnEngineNative.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnEngineWin.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnFile.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnGame.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnGnuG.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnIn.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnLevel.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnMath.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnMem.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnMesh.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnModel.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnName.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnNames.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnNet.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnNetDrv.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnObj.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnObjBas.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnObjVer.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnPenLev.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnPlayer.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnPrim.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnProfile.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnReach.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnRender.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnRenderIterator.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnRenderIteratorSupport.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnRenDev.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnScript.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnScrTex.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnShadTex.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnSkel.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnStack.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnTemplate.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnTex.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnType.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnUnix.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Engine\Inc\UnURL.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnVcWin32.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune\Core\Inc\UnVcWn32SSE.h">
+      <Filter>Game Headers\Rune</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\AActor.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\ABrush.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\ACamera.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\ACarcass.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\AGameReplicationInfo.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\AInventory.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\ALevelInfo.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\AMover.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\AParticleSystem.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\APawn.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\APickup.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\APlayerPawn.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\APlayerReplicationInfo.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\APolyobj.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\AWeapon.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\AZoneInfo.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\Core.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\Engine.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\EngineClasses.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FCodec.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FConfigCacheIni.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FFeedbackContextAnsi.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FFeedbackContextWindows.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FFileManagerAnsi.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FFileManagerGeneric.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FFileManagerLinux.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FFileManagerWindows.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FMallocAnsi.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FMallocDebug.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FMallocWindows.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FOutputDeviceAnsiError.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FOutputDeviceFile.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FOutputDeviceNull.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FOutputDeviceStdout.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FOutputDeviceWindowsError.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\FRiffChunk.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\Palette.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\S3tc.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UExporter.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UFactory.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\ULevelSummary.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\unactor.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnArc.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnAudio.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnBits.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnBuild.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnBunch.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnCache.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnCamera.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnChan.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnCId.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnClass.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnCon.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnConn.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnCoreNative.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnCoreNet.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnCorObj.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnDDraw.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnDemoPenLev.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnDemoRec.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnDynBsp.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnEngine.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnEngineGnuG.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnEngineNative.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnEngineWin.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnFile.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnGame.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnGnuG.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnIn.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnLevel.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnMath.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnMem.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnMesh.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\unmodel.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnName.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnNames.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnNet.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnNetDrv.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnObj.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnObjBas.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnObjVer.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnParticle.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnPenLev.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnPlayer.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnPrim.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnProfile.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnReach.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnRender.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnRenderIterator.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnRenderIteratorSupport.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnRenDev.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnScript.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnScrTex.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnShadTex.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\unskel.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnStack.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\untemplate.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnTex.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnType.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnUnix.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Engine\Inc\UnURL.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnVcWin32.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Games\Rune_100\Core\Inc\UnVcWn32SSE.h">
+      <Filter>Game Headers\Rune_100</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryRenderer.h">
+      <Filter>Header Files\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="ProperWindows.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UVulkan1RenderDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UVulkan1RenderDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vulkan-drv.int">
+      <Filter>Misc</Filter>
+    </None>
+  </ItemGroup>
+</Project>

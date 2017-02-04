@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{3168B35B-B1D0-4238-8058-ACB4F39E8034}") = "vulkan-drv", "vulkan-drv\vulkan-drv.vcxproj", "{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Deus Ex Debug|Win32 = Deus Ex Debug|Win32
+		Deus Ex Release|Win32 = Deus Ex Release|Win32
+		Rune 1.00 Debug|Win32 = Rune 1.00 Debug|Win32
+		Rune 1.00 Release|Win32 = Rune 1.00 Release|Win32
+		Rune Debug|Win32 = Rune Debug|Win32
+		Rune Release|Win32 = Rune Release|Win32
+		Unreal Gold Debug|Win32 = Unreal Gold Debug|Win32
+		Unreal Gold Release|Win32 = Unreal Gold Release|Win32
+		Unreal Tournament Debug|Win32 = Unreal Tournament Debug|Win32
+		Unreal Tournament Release|Win32 = Unreal Tournament Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Deus Ex Debug|Win32.ActiveCfg = Deus Ex Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Deus Ex Debug|Win32.Build.0 = Deus Ex Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Deus Ex Release|Win32.ActiveCfg = Deus Ex Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Deus Ex Release|Win32.Build.0 = Deus Ex Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune 1.00 Debug|Win32.ActiveCfg = Rune 1.00 Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune 1.00 Debug|Win32.Build.0 = Rune 1.00 Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune 1.00 Release|Win32.ActiveCfg = Rune 1.00 Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune 1.00 Release|Win32.Build.0 = Rune 1.00 Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune Debug|Win32.ActiveCfg = Rune Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune Debug|Win32.Build.0 = Rune Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune Release|Win32.ActiveCfg = Rune Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Rune Release|Win32.Build.0 = Rune Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Gold Debug|Win32.ActiveCfg = Unreal Gold Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Gold Debug|Win32.Build.0 = Unreal Gold Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Gold Release|Win32.ActiveCfg = Unreal Gold Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Gold Release|Win32.Build.0 = Unreal Gold Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Tournament Debug|Win32.ActiveCfg = Unreal Tournament Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Tournament Debug|Win32.Build.0 = Unreal Tournament Debug|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Tournament Release|Win32.ActiveCfg = Unreal Tournament Release|Win32
+		{CAAF275B-D94C-40DF-8E46-DAA3563C0B1C}.Unreal Tournament Release|Win32.Build.0 = Unreal Tournament Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

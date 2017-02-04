@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <GAMENAME>Rune_100</GAMENAME>
+    <GAMEDIR>D:\Rune</GAMEDIR>
+    <GAMEEXE>Rune.exe</GAMEEXE>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25420.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>RUNE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="GAMENAME">
+      <Value>$(GAMENAME)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEDIR">
+      <Value>$(GAMEDIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GAMEEXE">
+      <Value>$(GAMEEXE)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

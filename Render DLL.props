@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25420.1</_ProjectFileVersion>
+    <OutDir>$(SolutionDir)\_work\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\_work\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../games/$(GAMENAME)/engine/inc;../games/$(GAMENAME)/core/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_REALLY_WANT_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StructMemberAlignment>4Bytes</StructMemberAlignment>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>../games/$(GAMENAME)/engine/lib/engine.lib;../games/$(GAMENAME)/core/lib/core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(GAMEDIR)\system\d3d11drv\"
+copy "%(RootDir)%(Directory)*.png" "$(GAMEDIR)\system\vulkan-drv"
+copy "%(RootDir)%(Directory)*.dll" "$(GAMEDIR)\system\"
+copy "%(RootDir)%(Directory)\$(SolutionName).int" "$(GAMEDIR)\system\"
+copy "$(TargetPath) " "$(GAMEDIR)\system\"
+
+mkdir "$(SolutionDir)\packages\$(GAMENAME)"
+mkdir "$(SolutionDir)\packages\$(GAMENAME)\vulkan-drv\"
+copy "%(RootDir)%(Directory)*.png" "$(SolutionDir)\packages\$(GAMENAME)\vulkan-drv"
+copy "%(RootDir)%(Directory)\$(SolutionName).int" "$(SolutionDir)\packages\$(GAMENAME)"
+copy "%(RootDir)%(Directory)*.dll"  "$(SolutionDir)\packages\$(GAMENAME)"
+copy "$(TargetPath)"  "$(SolutionDir)\packages\$(GAMENAME)"
+</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command />
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
