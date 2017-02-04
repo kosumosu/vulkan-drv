@@ -55,8 +55,29 @@ Initialization of renderer.
 */
 UBOOL UVulkan1RenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen)
 {
+	Viewport = InViewport;
+	SpanBased = 0;
+	FullscreenOnly = 0;
+	SupportsFogMaps = 1;
+	SupportsTC = 1;
+	SupportsDistanceFog = 0;
+	SupportsLazyTextures = 0;
 
-	return 1;
+	//Force on detail options as not all games give easy access to these
+	Coronas = 1;
+#if (!UNREALGOLD)
+	DetailTextures = 1;
+#endif
+	ShinySurfaces = 1;
+	HighDetailActors = 1;
+	VolumetricLighting = 1;
+	//PrecacheOnFlip = 1; //Turned on to immediately recache on init (prevents lack of textures after fullscreen switch)
+
+	//Do some nice compatibility fixing: set processor affinity to single-cpu
+	//SetProcessAffinityMask(GetCurrentProcess(), 0x1);
+
+
+	return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
 }
 
 /**
@@ -70,7 +91,9 @@ Resize buffers and viewport.
 UBOOL UVulkan1RenderDevice::SetRes(INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen)
 {
 
-	return 1;
+	UBOOL Result = URenderDevice::Viewport->ResizeViewport(Fullscreen ? (BLIT_Fullscreen) : (BLIT_HardwarePaint), NewX, NewY, NewColorBytes);
+
+	return Result;
 }
 
 /**
@@ -92,6 +115,12 @@ void UVulkan1RenderDevice::Flush(UBOOL AllowPrecache)
 #endif
 {
 
+	return;
+	//If caching is allowed, tell the game to make caching calls (PrecacheTexture() function)
+#if (!UNREALGOLD)
+	if (AllowPrecache)
+		PrecacheOnFlip = 1;
+#endif
 }
 
 /**
@@ -119,7 +148,7 @@ Finish rendering.
 */
 void UVulkan1RenderDevice::Unlock(UBOOL Blit)
 {
-	
+
 }
 
 /**
@@ -256,7 +285,7 @@ Various command from the game. Can be used to intercept input. First let the par
 */
 UBOOL UVulkan1RenderDevice::Exec(const TCHAR * Cmd, FOutputDevice& Ar)
 {
-	return 1;
+	return URenderDevice::Exec(Cmd, Ar);
 }
 
 

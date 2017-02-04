@@ -1785,7 +1785,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vulkan-drv.int">
+    <None Include="Vulkan1Drv.int">
       <Filter>Misc</Filter>
     </None>
   </ItemGroup>

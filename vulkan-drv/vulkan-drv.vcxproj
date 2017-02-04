@@ -47,6 +47,7 @@
     <RootNamespace>vulkan-drv</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>vulkan-drv</ProjectName>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Debug|Win32'" Label="Configuration">
@@ -182,10 +183,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Debug|Win32'">
     <GenerateManifest>true</GenerateManifest>
     <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+    <TargetName>Vulkan1Drv</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Release|Win32'">
     <CustomBuildAfterTargets>PreBuildEvent</CustomBuildAfterTargets>
     <GenerateManifest>true</GenerateManifest>
+    <TargetName>Vulkan1Drv</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Gold Debug|Win32'">
     <GenerateManifest>true</GenerateManifest>
@@ -7205,7 +7208,7 @@
     <ResourceCompile Include="res.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="vulkan-drv.int" />
+    <None Include="Vulkan1Drv.int" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

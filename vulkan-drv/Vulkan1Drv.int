@@ -3,7 +3,7 @@ Object=(Name=Vulkan1Drv.Vulkan1RenderDevice,Class=Class,MetaClass=Engine.RenderD
 Preferences=(Caption="Rendering",Parent="Advanced Options")
 Preferences=(Caption="Vulkan support",Parent="Rendering",Class=Vulkan1Drv.Vulkan1RenderDevice,Immediate=True)
 
-[D3D11RenderDevice]
+[Vulkan1RenderDevice]
 ClassCaption="Vulkan Support"
 AskInstalled=Do you want to use Vulkan?
 AskUse=

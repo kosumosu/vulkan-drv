@@ -62,5 +62,4 @@ public:
 	void PostDrawGouraud(FLOAT FogDistance);
 	//@}
 #endif
-
 };
