@@ -1,20 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
-    </Filter>
-    <Filter Include="FX">
-      <UniqueIdentifier>{7b4bda81-0822-4646-bf37-b171bec98a50}</UniqueIdentifier>
     </Filter>
     <Filter Include="Misc">
       <UniqueIdentifier>{297383a7-07e8-4f88-aad7-64250748af20}</UniqueIdentifier>
@@ -40,17 +29,8 @@
     <Filter Include="Game Headers\Rune_100">
       <UniqueIdentifier>{c665da21-3fb0-4cf2-a34d-f4ba35521443}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Renderers">
-      <UniqueIdentifier>{2a308e4d-e15c-4149-a02f-2cf3d49a777b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="polyflags.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Games\DeusEx\Engine\Inc\AActor.h">
       <Filter>Game Headers\Deus Ex</Filter>
     </ClInclude>
@@ -1764,15 +1744,11 @@
     <ClInclude Include="..\Games\Rune_100\Core\Inc\UnVcWn32SSE.h">
       <Filter>Game Headers\Rune_100</Filter>
     </ClInclude>
-    <ClInclude Include="GeometryRenderer.h">
-      <Filter>Header Files\Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="ProperWindows.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UVulkan1RenderDevice.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="UVulkan1RenderDevice.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="polyflags.h" />
+    <ClInclude Include="ProperWindows.h" />
+    <ClInclude Include="utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res.rc">
@@ -1780,13 +1756,12 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UVulkan1RenderDevice.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Vulkan1Drv.int">
       <Filter>Misc</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UVulkan1RenderDevice.cpp" />
+    <ClCompile Include="VulkanFunctions.cpp" />
   </ItemGroup>
 </Project>

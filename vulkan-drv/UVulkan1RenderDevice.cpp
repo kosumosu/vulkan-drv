@@ -1,5 +1,8 @@
 #include "UVulkan1RenderDevice.h"
 #include "resource.h"
+#include "utils.hpp"
+#include <iostream>
+#include <sstream>
 
 //UObject glue
 IMPLEMENT_PACKAGE(Vulkan1Drv);
@@ -24,6 +27,105 @@ Constructor called by the game when the renderer is first created.
 void UVulkan1RenderDevice::StaticConstructor()
 {
 
+}
+
+
+void UVulkan1RenderDevice::InitVulkanInstance() {
+	vk::ApplicationInfo appInfo;
+	appInfo
+		.setApiVersion(VK_API_VERSION_1_0)
+		.setPApplicationName("unreal98-vulkan-drv")
+		.setApplicationVersion(VK_MAKE_VERSION(1, 0, 0))
+		.setEngineVersion(VK_MAKE_VERSION(1, 0, 0));
+
+	constexpr const char* extensions[] =
+	{
+		VK_KHR_SURFACE_EXTENSION_NAME,
+		VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
+#if defined(_DEBUG)
+		VK_EXT_DEBUG_REPORT_EXTENSION_NAME
+#endif
+	};
+
+	constexpr const char* layers[] =
+	{
+#if defined(_DEBUG)
+		"VK_LAYER_LUNARG_standard_validation"
+#endif
+	};
+
+	vk::InstanceCreateInfo instanceCreateInfo;
+	instanceCreateInfo
+		.setPApplicationInfo(&appInfo)
+		.setPpEnabledExtensionNames(&extensions[0])
+		.setEnabledExtensionCount(utils::array_size(extensions))
+		.setPpEnabledLayerNames(&layers[0])
+		.setEnabledLayerCount(utils::array_size(layers));
+
+	_instance = vk::createInstance(instanceCreateInfo);
+
+	vk::DebugReportCallbackCreateInfoEXT debugCallbackInfo;
+	debugCallbackInfo
+		.setFlags(vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::ePerformanceWarning)
+		.setPfnCallback(reinterpret_cast<PFN_vkDebugReportCallbackEXT>(&VulkanDebugCallback))
+		.setPUserData(this);
+
+	_debugCallbackHanlde = _instance.createDebugReportCallbackEXT(debugCallbackInfo);
+}
+
+VkBool32 UVulkan1RenderDevice::VulkanDebugCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t srcObject, size_t location, int32_t msgCode, const char * pLayerPrefix, const char * pMsg, void * pUserData)
+{
+	// Select prefix depending on flags passed to the callback
+	// Note that multiple flags may be set for a single validation message
+	std::wstringstream text;
+
+	// Error that may result in undefined behaviour
+	if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT)
+	{
+		text << "ERROR:";
+	};
+	// Warnings may hint at unexpected / non-spec API usage
+	if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
+	{
+		text << "WARNING:";
+	};
+	// May indicate sub-optimal usage of the API
+	if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
+	{
+		text << "PERFORMANCE:";
+	};
+	// Informal messages that may become handy during debugging
+	if (flags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT)
+	{
+		text << "INFO:";
+	}
+	// Diagnostic info from the Vulkan loader and layers
+	// Usually not helpful in terms of API usage, but may help to debug layer and loader problems 
+	if (flags & VK_DEBUG_REPORT_DEBUG_BIT_EXT)
+	{
+		text << "DEBUG:";
+	}
+
+	// Display message to default output (console if activated)
+	text << " [" << pLayerPrefix << "] Code " << msgCode << " : " << pMsg << "\n";
+
+	DebugPrint(text.str());
+
+	return VK_FALSE;
+}
+
+void UVulkan1RenderDevice::DebugPrint(const std::wstring & message)
+{
+	GLog->Log(message.c_str());
+	//GLog already does OutputDebugStringW.
+//#ifdef _DEBUG //In debug mode, print output to console
+//	OutputDebugStringW(message.c_str());
+//#endif
+}
+
+vk::PhysicalDevice UVulkan1RenderDevice::FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice> & physicalDevices)
+{
+	return physicalDevices[0];
 }
 
 /**
@@ -76,6 +178,18 @@ UBOOL UVulkan1RenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT 
 	//Do some nice compatibility fixing: set processor affinity to single-cpu
 	//SetProcessAffinityMask(GetCurrentProcess(), 0x1);
 
+	InitVulkanInstance();
+
+	const auto physicalDevices = _instance.enumeratePhysicalDevices();
+	if (physicalDevices.size() < 1)
+		throw std::runtime_error("Vulkan reported no devices.");
+
+	const auto selectedDevice = FindRequiredPhysicalDevice(physicalDevices);
+
+	vk::DeviceCreateInfo deviceInfo;
+	//deviceInfo.
+
+	//selectedDevice.createDevice()
 
 	return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
 }
@@ -101,7 +215,8 @@ Cleanup.
 */
 void UVulkan1RenderDevice::Exit()
 {
-
+	_instance.destroyDebugReportCallbackEXT(_debugCallbackHanlde);
+	_instance.destroy();
 }
 
 /**
@@ -170,7 +285,7 @@ Complex surfaces are used for map geometry. They consists of facets which in tur
 */
 void UVulkan1RenderDevice::DrawComplexSurface(FSceneNode* Frame, FSurfaceInfo& Surface, FSurfaceFacet& Facet)
 {
-	
+
 }
 
 /**
@@ -216,7 +331,7 @@ Other renderers take the opposite approach and multiply X by RProjZ*Z and Y by R
 */
 void UVulkan1RenderDevice::DrawTile(FSceneNode* Frame, FTextureInfo& Info, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, FLOAT U, FLOAT V, FLOAT UL, FLOAT VL, class FSpanBuffer* Span, FLOAT Z, FPlane Color, FPlane Fog, DWORD PolyFlags)
 {
-	
+
 }
 
 /**
@@ -239,7 +354,7 @@ Clear the depth buffer. Used to draw the skybox behind the rest of the geometry,
 */
 void UVulkan1RenderDevice::ClearZ(FSceneNode* Frame)
 {
-	
+
 }
 
 /**
@@ -270,7 +385,7 @@ Used for screenshots and savegame previews.
 */
 void UVulkan1RenderDevice::ReadPixels(FColor* Pixels)
 {
-	
+
 }
 
 /**
@@ -299,7 +414,7 @@ The D3D10 renderer moves gouraud polygons and tiles with Z < zNear (or Z < ZWeap
 */
 void UVulkan1RenderDevice::SetSceneNode(FSceneNode* Frame)
 {
-	
+
 }
 
 /**
@@ -313,7 +428,7 @@ Store a texture in the renderer-kept texture cache. Only called by the game if U
 */
 void UVulkan1RenderDevice::PrecacheTexture(FTextureInfo& Info, DWORD PolyFlags)
 {
-	
+
 }
 
 /**

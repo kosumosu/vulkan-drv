@@ -111,49 +111,49 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\debug.props" />
     <Import Project="..\rune_100.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\release.props" />
     <Import Project="..\rune_100.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Rune Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\debug.props" />
     <Import Project="..\rune.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Rune Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\release.props" />
     <Import Project="..\rune.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\unrealtournament.props" />
     <Import Project="..\release.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\unrealtournament.props" />
     <Import Project="..\debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Unreal Gold Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\unrealgold.props" />
     <Import Project="..\release.props" />
   </ImportGroup>
@@ -161,7 +161,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Render DLL.props" />
     <Import Project="..\unrealgold.props" />
-    <Import Project="..\d3d11.props" />
+    <Import Project="..\vulkan.props" />
     <Import Project="..\debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Release|Win32'" Label="PropertySheets">
@@ -175,6 +175,7 @@
     <Import Project="..\Render DLL.props" />
     <Import Project="..\deus ex.props" />
     <Import Project="..\debug.props" />
+    <Import Project="..\vulkan.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -344,6 +345,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="UVulkan1RenderDevice.cpp" />
+    <ClCompile Include="VulkanFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Games\DeusEx\Core\Inc\Core.h">
@@ -7198,8 +7200,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unreal Tournament Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="utils.hpp" />
     <ClInclude Include="UVulkan1RenderDevice.h" />
-    <ClInclude Include="GeometryRenderer.h" />
     <ClInclude Include="polyflags.h" />
     <ClInclude Include="ProperWindows.h" />
     <ClInclude Include="resource.h" />

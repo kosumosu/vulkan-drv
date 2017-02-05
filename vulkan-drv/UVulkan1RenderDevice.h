@@ -6,6 +6,8 @@
 #include <memory>
 #include <string>
 
+#include <vulkan/vulkan.hpp>
+
 class UVulkan1RenderDevice : public URenderDevice
 {
 public:
@@ -13,7 +15,7 @@ public:
 
 	//UObject glue
 #if (UNREALTOURNAMENT || RUNE)
-	DECLARE_CLASS(UD3D11RenderDevice, URenderDevice, CLASS_Config, D3D11Drv)
+	DECLARE_CLASS(UD3D11RenderDevice, URenderDevice, CLASS_Config, Vulkan1Drv)
 #else
 	DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 #endif
@@ -52,6 +54,7 @@ public:
 	void EndFlash() override;
 	// ReSharper disable once CppHidingFunction
 	void StaticConstructor();
+	void InitVulkanInstance();
 	//@}
 
 #ifdef RUNE
@@ -62,4 +65,22 @@ public:
 	void PostDrawGouraud(FLOAT FogDistance);
 	//@}
 #endif
+
+private:
+	vk::Instance _instance;
+	vk::DebugReportCallbackEXT _debugCallbackHanlde;
+
+private:
+	static VkBool32 VulkanDebugCallback(
+		VkDebugReportFlagsEXT flags,
+		VkDebugReportObjectTypeEXT objType,
+		uint64_t srcObject,
+		size_t location,
+		int32_t msgCode,
+		const char* pLayerPrefix,
+		const char* pMsg,
+		void* pUserData);
+
+	static void DebugPrint(const std::wstring & message);
+	vk::PhysicalDevice FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice> & physicalDevices);
 };

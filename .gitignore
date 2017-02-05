@@ -51,3 +51,6 @@ _work/
 packages/
 vulkan-drv.VC.VC.opendb
 *.suo
+/vulkan-drv/~AutoRecover.vulkan-drv.vcxproj4
+/vulkan-drv/~AutoRecover.vulkan-drv.vcxproj2
+/vulkan-drv/~AutoRecover.vulkan-drv.vcxproj1
