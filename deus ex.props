@@ -4,7 +4,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <GAMENAME>DeusEx</GAMENAME>
-    <GAMEDIR>F:\GAMES\SteamLibrary\steamapps\common\Deus Ex</GAMEDIR>
+    <GAMEDIR>F:\Games\Deus Ex GOTY</GAMEDIR>
     <GAMEEXE>deusex.exe</GAMEEXE>
   </PropertyGroup>
   <PropertyGroup>

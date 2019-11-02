@@ -5,8 +5,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>14.0.25420.1</_ProjectFileVersion>
-    <OutDir>$(SolutionDir)\_work\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\_work\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -20,18 +18,13 @@
       <AdditionalDependencies>../games/$(GAMENAME)/engine/lib/engine.lib;../games/$(GAMENAME)/core/lib/core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "$(GAMEDIR)\system\d3d11drv\"
-copy "%(RootDir)%(Directory)*.png" "$(GAMEDIR)\system\vulkan-drv"
-copy "%(RootDir)%(Directory)*.dll" "$(GAMEDIR)\system\"
-copy "%(RootDir)%(Directory)\$(SolutionName).int" "$(GAMEDIR)\system\"
-copy "$(TargetPath) " "$(GAMEDIR)\system\"
+      <Command>
+copy "$(ProjectDir)$(TargetName).int" "$(GAMEDIR)\system\"
+copy "$(TargetPath)" "$(GAMEDIR)\system\"
 
-mkdir "$(SolutionDir)\packages\$(GAMENAME)"
-mkdir "$(SolutionDir)\packages\$(GAMENAME)\vulkan-drv\"
-copy "%(RootDir)%(Directory)*.png" "$(SolutionDir)\packages\$(GAMENAME)\vulkan-drv"
-copy "%(RootDir)%(Directory)\$(SolutionName).int" "$(SolutionDir)\packages\$(GAMENAME)"
-copy "%(RootDir)%(Directory)*.dll"  "$(SolutionDir)\packages\$(GAMENAME)"
-copy "$(TargetPath)"  "$(SolutionDir)\packages\$(GAMENAME)"
+mkdir "$(SolutionDir)packages\$(GAMENAME)"
+copy "$(ProjectDir)$(TargetName).int" "$(SolutionDir)\packages\$(GAMENAME)"
+copy "$(TargetPath)" "$(SolutionDir)\packages\$(GAMENAME)"
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>

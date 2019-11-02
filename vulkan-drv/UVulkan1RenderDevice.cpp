@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+using namespace std::string_literals;
+
 //UObject glue
 IMPLEMENT_PACKAGE(Vulkan1Drv);
 IMPLEMENT_CLASS(UVulkan1RenderDevice);
@@ -26,58 +28,59 @@ Constructor called by the game when the renderer is first created.
 */
 void UVulkan1RenderDevice::StaticConstructor()
 {
-
 }
 
 
-void UVulkan1RenderDevice::InitVulkanInstance() {
+void UVulkan1RenderDevice::InitVulkanInstance()
+{
 	vk::ApplicationInfo appInfo;
 	appInfo
 		.setApiVersion(VK_API_VERSION_1_0)
-		.setPApplicationName("unreal98-vulkan-drv")
+		.setPApplicationName("unreal98-Vulkan1Drv")
 		.setApplicationVersion(VK_MAKE_VERSION(1, 0, 0))
 		.setEngineVersion(VK_MAKE_VERSION(1, 0, 0));
 
-	constexpr const char* extensions[] =
-	{
+	constexpr auto extensions = utils::make_array<const char*>(
 		VK_KHR_SURFACE_EXTENSION_NAME,
 		VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
 #if defined(_DEBUG)
 		VK_EXT_DEBUG_REPORT_EXTENSION_NAME
 #endif
-	};
+	);
 
-	constexpr const char* layers[] =
-	{
+	constexpr auto layers = utils::make_array<const char*>(
 #if defined(_DEBUG)
 		"VK_LAYER_LUNARG_standard_validation"
 #endif
-	};
+	);
 
 	vk::InstanceCreateInfo instanceCreateInfo;
 	instanceCreateInfo
 		.setPApplicationInfo(&appInfo)
-		.setPpEnabledExtensionNames(&extensions[0])
-		.setEnabledExtensionCount(utils::array_size(extensions))
-		.setPpEnabledLayerNames(&layers[0])
-		.setEnabledLayerCount(utils::array_size(layers));
+		.setPpEnabledExtensionNames(extensions.data())
+		.setEnabledExtensionCount(extensions.size())
+		.setPpEnabledLayerNames(layers.data())
+		.setEnabledLayerCount(layers.size());
 
 	_instance = vk::createInstance(instanceCreateInfo);
 
 	vk::DebugReportCallbackCreateInfoEXT debugCallbackInfo;
 	debugCallbackInfo
 		.setFlags(vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::ePerformanceWarning)
-		.setPfnCallback(reinterpret_cast<PFN_vkDebugReportCallbackEXT>(&VulkanDebugCallback))
+		.setPfnCallback(VulkanDebugCallback)
 		.setPUserData(this);
 
-	_debugCallbackHanlde = _instance.createDebugReportCallbackEXT(debugCallbackInfo);
+	_debugCallbackHandle = _instance.createDebugReportCallbackEXT(debugCallbackInfo);
 }
 
-VkBool32 UVulkan1RenderDevice::VulkanDebugCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t srcObject, size_t location, int32_t msgCode, const char * pLayerPrefix, const char * pMsg, void * pUserData)
+VkBool32 VKAPI_CALL UVulkan1RenderDevice::VulkanDebugCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t srcObject,
+                                                              size_t location, int32_t msgCode, const char* pLayerPrefix, const char* pMsg, void* pUserData)
 {
 	// Select prefix depending on flags passed to the callback
 	// Note that multiple flags may be set for a single validation message
 	std::wstringstream text;
+
+	text << "[Vulkan.Debug_extension] ";
 
 	// Error that may result in undefined behaviour
 	if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT)
@@ -114,18 +117,104 @@ VkBool32 UVulkan1RenderDevice::VulkanDebugCallback(VkDebugReportFlagsEXT flags, 
 	return VK_FALSE;
 }
 
-void UVulkan1RenderDevice::DebugPrint(const std::wstring & message)
+void UVulkan1RenderDevice::DebugPrint(const std::wstring& message)
 {
-	GLog->Log(message.c_str());
-	//GLog already does OutputDebugStringW.
-//#ifdef _DEBUG //In debug mode, print output to console
-//	OutputDebugStringW(message.c_str());
-//#endif
+	std::wstringstream ss;
+	ss << "[Vulkan1Drv] " << message;
+	GLog->Log(ss.str().c_str());
+	// DeusExe's GLog already does OutputDebugStringW.
+	//#ifdef _DEBUG //In debug mode, print output to console
+	//	OutputDebugStringW(message.c_str());
+	//#endif
 }
 
-vk::PhysicalDevice UVulkan1RenderDevice::FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice> & physicalDevices)
+std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::FindRequiredPhysicalDevice(
+	const std::vector<vk::PhysicalDevice>& physicalDevices, const vk::SurfaceKHR& presentationSurface) const
 {
-	return physicalDevices[0];
+	for (const auto& physicalDevice : physicalDevices)
+	{
+		const auto queueFamilies = physicalDevice.getQueueFamilyProperties();
+		const auto renderingQueueIt = std::find_if(queueFamilies.begin(), queueFamilies.end(), [](const vk::QueueFamilyProperties& props)
+		{
+			return props.queueFlags & vk::QueueFlagBits::eGraphics;
+		});
+
+		if (renderingQueueIt == queueFamilies.end())
+			continue;
+
+		bool hasPresentationQueue = false;
+		size_t presentationQueueIndex = 0;
+		for (size_t i = 0; i < queueFamilies.size(); ++i)
+		{
+			if (physicalDevice.getSurfaceSupportKHR(i, presentationSurface))
+			{
+				hasPresentationQueue = true;
+				presentationQueueIndex = i;
+				break;
+			}
+		}
+
+		if (!hasPresentationQueue)
+			continue;
+
+		const auto presentationQueueIt = std::find_if(queueFamilies.begin(), queueFamilies.end(), [](const vk::QueueFamilyProperties& props)
+		{
+			return props.queueFlags & vk::QueueFlagBits::eGraphics;
+		});
+		const auto renderingQueueIndex = std::distance(queueFamilies.begin(), renderingQueueIt);
+
+		return DeviceSearchResult{physicalDevice, size_t(renderingQueueIndex), presentationQueueIndex};
+	}
+
+	return std::nullopt;
+}
+
+void UVulkan1RenderDevice::InitVirtualDevice(UViewport* InViewport)
+{
+	vk::Win32SurfaceCreateInfoKHR surfaceInfo;
+	surfaceInfo
+		.setHinstance(GetModuleHandle(nullptr))
+		.setHwnd(static_cast<HWND>(InViewport->GetWindow()));
+
+
+	const auto presentationSurface = _instance.createWin32SurfaceKHR(surfaceInfo);
+
+	const auto physicalDevices = _instance.enumeratePhysicalDevices();
+	if (physicalDevices.empty())
+		throw std::runtime_error("Vulkan reported no devices.");
+
+	const auto deviceSearchResult = FindRequiredPhysicalDevice(physicalDevices, presentationSurface);
+
+	if (!deviceSearchResult)
+		throw std::runtime_error("Can't find supported device (presentation + graphics)");
+
+	const float priority = 1.0f;
+	std::vector<vk::DeviceQueueCreateInfo> queueInfos;
+
+	queueInfos.push_back(vk::DeviceQueueCreateInfo(vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1, &priority));
+	if (deviceSearchResult->presentationQueueFamilyIndex != deviceSearchResult->renderingQueueFamilyIndex)
+		queueInfos.push_back(vk::DeviceQueueCreateInfo(vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1, &priority));
+
+	constexpr auto extensions = utils::make_array<const char *>(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+
+	vk::PhysicalDeviceFeatures features;
+	features.setTextureCompressionBC(VK_TRUE);
+
+	vk::DeviceCreateInfo deviceInfo;
+	deviceInfo
+		.setPpEnabledExtensionNames(&extensions[0])
+		.setEnabledExtensionCount(extensions.size())
+		.setPQueueCreateInfos(queueInfos.data())
+		.setQueueCreateInfoCount(queueInfos.size())
+		.setPEnabledFeatures(&features);
+
+	std::wstringstream ss;
+	ss << "Found device: \"" << deviceSearchResult->device.getProperties().deviceName << "\"";
+	DebugPrint(ss.str());
+
+	_device = deviceSearchResult->device.createDevice(deviceInfo);
+	_presentationQueueFamilyIndex = deviceSearchResult->presentationQueueFamilyIndex;
+	_renderingQueueFamilyIndex = deviceSearchResult->renderingQueueFamilyIndex;
 }
 
 /**
@@ -155,7 +244,7 @@ Initialization of renderer.
 
 \note This renderer ignores color depth.
 */
-UBOOL UVulkan1RenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen)
+UBOOL UVulkan1RenderDevice::Init(UViewport* InViewport, INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen)
 {
 	Viewport = InViewport;
 	SpanBased = 0;
@@ -180,16 +269,17 @@ UBOOL UVulkan1RenderDevice::Init(UViewport *InViewport, INT NewX, INT NewY, INT 
 
 	InitVulkanInstance();
 
-	const auto physicalDevices = _instance.enumeratePhysicalDevices();
-	if (physicalDevices.size() < 1)
-		throw std::runtime_error("Vulkan reported no devices.");
+	InitVirtualDevice(InViewport);
 
-	const auto selectedDevice = FindRequiredPhysicalDevice(physicalDevices);
+	vk::CommandPoolCreateInfo presentationCommandPoolCreateInfo;
+	presentationCommandPoolCreateInfo
+		.setQueueFamilyIndex(_presentationQueueFamilyIndex);
+	_presentationCommandPool = _device.createCommandPool(presentationCommandPoolCreateInfo);
 
-	vk::DeviceCreateInfo deviceInfo;
-	//deviceInfo.
-
-	//selectedDevice.createDevice()
+	vk::CommandPoolCreateInfo renderingCommandPoolCreateInfo;
+	renderingCommandPoolCreateInfo
+		.setQueueFamilyIndex(_renderingQueueFamilyIndex);
+	_renderingCommandPool = _device.createCommandPool(presentationCommandPoolCreateInfo);
 
 	return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
 }
@@ -204,7 +294,6 @@ Resize buffers and viewport.
 */
 UBOOL UVulkan1RenderDevice::SetRes(INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen)
 {
-
 	UBOOL Result = URenderDevice::Viewport->ResizeViewport(Fullscreen ? (BLIT_Fullscreen) : (BLIT_HardwarePaint), NewX, NewY, NewColorBytes);
 
 	return Result;
@@ -215,7 +304,7 @@ Cleanup.
 */
 void UVulkan1RenderDevice::Exit()
 {
-	_instance.destroyDebugReportCallbackEXT(_debugCallbackHanlde);
+	_instance.destroyDebugReportCallbackEXT(_debugCallbackHandle);
 	_instance.destroy();
 }
 
@@ -229,7 +318,6 @@ void UVulkan1RenderDevice::Flush()
 void UVulkan1RenderDevice::Flush(UBOOL AllowPrecache)
 #endif
 {
-
 	return;
 	//If caching is allowed, tell the game to make caching calls (PrecacheTexture() function)
 #if (!UNREALGOLD)
@@ -254,7 +342,6 @@ EndFlash() ends this, but other renderers actually save the parameters and start
 */
 void UVulkan1RenderDevice::Lock(FPlane FlashScale, FPlane FlashFog, FPlane ScreenClear, DWORD RenderLockFlags, BYTE* InHitData, INT* InHitSize)
 {
-
 }
 
 /**
@@ -263,7 +350,6 @@ Finish rendering.
 */
 void UVulkan1RenderDevice::Unlock(UBOOL Blit)
 {
-
 }
 
 /**
@@ -285,7 +371,6 @@ Complex surfaces are used for map geometry. They consists of facets which in tur
 */
 void UVulkan1RenderDevice::DrawComplexSurface(FSceneNode* Frame, FSurfaceInfo& Surface, FSurfaceFacet& Facet)
 {
-
 }
 
 /**
@@ -303,7 +388,6 @@ They are sent with a call of this function per triangle fan, worldview transform
 */
 void UVulkan1RenderDevice::DrawGouraudPolygon(FSceneNode* Frame, FTextureInfo& Info, FTransTexture** Pts, int NumPts, DWORD PolyFlags, FSpanBuffer* Span)
 {
-
 }
 
 /**
@@ -329,9 +413,9 @@ Used for 2D UI elements, coronas, etc.
 The Z coordinate however is transformed and divided by W; then W is set to 1 in the shader to get correct depth and yet preserve X and Y.
 Other renderers take the opposite approach and multiply X by RProjZ*Z and Y by RProjZ*Z*aspect so they are preserved and then transform everything.
 */
-void UVulkan1RenderDevice::DrawTile(FSceneNode* Frame, FTextureInfo& Info, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, FLOAT U, FLOAT V, FLOAT UL, FLOAT VL, class FSpanBuffer* Span, FLOAT Z, FPlane Color, FPlane Fog, DWORD PolyFlags)
+void UVulkan1RenderDevice::DrawTile(FSceneNode* Frame, FTextureInfo& Info, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, FLOAT U, FLOAT V, FLOAT UL, FLOAT VL,
+                                    class FSpanBuffer* Span, FLOAT Z, FPlane Color, FPlane Fog, DWORD PolyFlags)
 {
-
 }
 
 /**
@@ -354,7 +438,6 @@ Clear the depth buffer. Used to draw the skybox behind the rest of the geometry,
 */
 void UVulkan1RenderDevice::ClearZ(FSceneNode* Frame)
 {
-
 }
 
 /**
@@ -376,7 +459,6 @@ Something to do with FPS counters etc, not needed.
 */
 void UVulkan1RenderDevice::GetStats(TCHAR* Result)
 {
-
 }
 
 /**
@@ -385,7 +467,6 @@ Used for screenshots and savegame previews.
 */
 void UVulkan1RenderDevice::ReadPixels(FColor* Pixels)
 {
-
 }
 
 /**
@@ -398,11 +479,10 @@ Various command from the game. Can be used to intercept input. First let the par
 
 \note Deus Ex ignores resolutions it does not like.
 */
-UBOOL UVulkan1RenderDevice::Exec(const TCHAR * Cmd, FOutputDevice& Ar)
+UBOOL UVulkan1RenderDevice::Exec(const TCHAR* Cmd, FOutputDevice& Ar)
 {
 	return URenderDevice::Exec(Cmd, Ar);
 }
-
 
 
 /**
@@ -414,7 +494,6 @@ The D3D10 renderer moves gouraud polygons and tiles with Z < zNear (or Z < ZWeap
 */
 void UVulkan1RenderDevice::SetSceneNode(FSceneNode* Frame)
 {
-
 }
 
 /**
@@ -428,15 +507,13 @@ Store a texture in the renderer-kept texture cache. Only called by the game if U
 */
 void UVulkan1RenderDevice::PrecacheTexture(FTextureInfo& Info, DWORD PolyFlags)
 {
-
 }
 
 /**
 Other renderers handle flashes here by saving the related structures; this one does it in Lock().
 */
-void  UVulkan1RenderDevice::EndFlash()
+void UVulkan1RenderDevice::EndFlash()
 {
-
 }
 
 #ifdef RUNE

@@ -3,8 +3,8 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>D:\PROGRAMMING\SDK\VulkanSDK\1.0.30.0\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\PROGRAMMING\SDK\VulkanSDK\1.0.30.0\Bin32;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\PROGRAMMING\SDK\VulkanSDK\1.1.121.2\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\PROGRAMMING\SDK\VulkanSDK\1.1.121.2\Lib32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>

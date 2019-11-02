@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "UnRender.h"
 #include <memory>
+#include <optional>
 #include <string>
 
 #include <vulkan/vulkan.hpp>
@@ -17,14 +18,14 @@ public:
 #if (UNREALTOURNAMENT || RUNE)
 	DECLARE_CLASS(UD3D11RenderDevice, URenderDevice, CLASS_Config, Vulkan1Drv)
 #else
-	DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
+DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 #endif
 
 public:
 
 	/**@name Abstract in parent class */
 	//@{	
-	UBOOL Init(UViewport *InViewport, INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen) override;
+	UBOOL Init(UViewport* InViewport, INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen) override;
 	UBOOL SetRes(INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen) override;
 	void Exit() override;
 #if UNREALGOLD || UNREAL
@@ -36,7 +37,8 @@ public:
 	void Unlock(UBOOL Blit) override;
 	void DrawComplexSurface(FSceneNode* Frame, FSurfaceInfo& Surface, FSurfaceFacet& Facet) override;
 	void DrawGouraudPolygon(FSceneNode* Frame, FTextureInfo& Info, FTransTexture** Pts, int NumPts, DWORD PolyFlags, FSpanBuffer* Span) override;
-	void DrawTile(FSceneNode* Frame, FTextureInfo& Info, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, FLOAT U, FLOAT V, FLOAT UL, FLOAT VL, class FSpanBuffer* Span, FLOAT Z, FPlane Color, FPlane Fog, DWORD PolyFlags) override;
+	void DrawTile(FSceneNode* Frame, FTextureInfo& Info, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, FLOAT U, FLOAT V, FLOAT UL, FLOAT VL, class FSpanBuffer* Span,
+	              FLOAT Z, FPlane Color, FPlane Fog, DWORD PolyFlags) override;
 	void Draw2DLine(FSceneNode* Frame, FPlane Color, DWORD LineFlags, FVector P1, FVector P2) override;
 	void Draw2DPoint(FSceneNode* Frame, FPlane Color, DWORD LineFlags, FLOAT X1, FLOAT Y1, FLOAT X2, FLOAT Y2, FLOAT Z) override;
 	void ClearZ(FSceneNode* Frame) override;
@@ -58,7 +60,7 @@ public:
 	//@}
 
 #ifdef RUNE
-/**@name Rune fog*/
+	/**@name Rune fog*/
 //@{
 	void DrawFogSurface(FSceneNode* Frame, FFogSurf &FogSurf);
 	void PreDrawGouraud(FSceneNode *Frame, FLOAT FogDistance, FPlane FogColor);
@@ -67,11 +69,25 @@ public:
 #endif
 
 private:
-	vk::Instance _instance;
-	vk::DebugReportCallbackEXT _debugCallbackHanlde;
+	struct DeviceSearchResult
+	{
+		vk::PhysicalDevice device;
+		size_t renderingQueueFamilyIndex;
+		size_t presentationQueueFamilyIndex;
+	};
 
 private:
-	static VkBool32 VulkanDebugCallback(
+	vk::Instance _instance;
+	vk::Device _device;
+	size_t _presentationQueueFamilyIndex;
+	size_t _renderingQueueFamilyIndex;
+	vk::CommandPool _presentationCommandPool;
+	vk::CommandPool _renderingCommandPool;
+
+	vk::DebugReportCallbackEXT _debugCallbackHandle;
+
+private:
+	static VkBool32 VKAPI_CALL VulkanDebugCallback(
 		VkDebugReportFlagsEXT flags,
 		VkDebugReportObjectTypeEXT objType,
 		uint64_t srcObject,
@@ -81,6 +97,9 @@ private:
 		const char* pMsg,
 		void* pUserData);
 
-	static void DebugPrint(const std::wstring & message);
-	vk::PhysicalDevice FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice> & physicalDevices);
+	static void DebugPrint(const std::wstring& message);
+	std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice>& physicalDevices,
+	                                                             const vk::SurfaceKHR& presentationSurface) const;
+	void InitVirtualDevice(UViewport* InViewport);
+	void CreateVirtualDevice(UViewport* InViewport, vk::ResultValueType<vk::Device>::type& device);
 };
