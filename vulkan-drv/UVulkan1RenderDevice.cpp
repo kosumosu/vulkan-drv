@@ -66,7 +66,7 @@ void UVulkan1RenderDevice::InitVulkanInstance()
 
 	vk::DebugReportCallbackCreateInfoEXT debugCallbackInfo;
 	debugCallbackInfo
-		.setFlags(vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::ePerformanceWarning)
+		.setFlags(vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::ePerformanceWarning | vk::DebugReportFlagBitsEXT::eDebug | vk::DebugReportFlagBitsEXT::eInformation)
 		.setPfnCallback(VulkanDebugCallback)
 		.setPUserData(this);
 
@@ -122,10 +122,6 @@ void UVulkan1RenderDevice::DebugPrint(const std::wstring& message)
 	std::wstringstream ss;
 	ss << "[Vulkan1Drv] " << message;
 	GLog->Log(ss.str().c_str());
-	// DeusExe's GLog already does OutputDebugStringW.
-	//#ifdef _DEBUG //In debug mode, print output to console
-	//	OutputDebugStringW(message.c_str());
-	//#endif
 }
 
 std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::FindRequiredPhysicalDevice(
@@ -240,7 +236,7 @@ Initialization of renderer.
 \param NewY Viewport height.
 \param NewColorBytes Color depth.
 \param Fullscreen Whether fullscreen mode should be used.
-\return 1 if init succesful. On 0, game errors out.
+\return 1 if init successful. On 0, game errors out.
 
 \note This renderer ignores color depth.
 */
@@ -286,17 +282,17 @@ UBOOL UVulkan1RenderDevice::Init(UViewport* InViewport, INT NewX, INT NewY, INT 
 
 /**
 Resize buffers and viewport.
-\return 1 if resize succesful. On 0, game errors out.
+\return 1 if resize successful. On 0, game errors out.
 
-\note Switching to fullscreen exits and reinitializes the renderer.
+\note Switching to fullscreen exits and re-initializes the renderer.
 \note Fullscreen can have values other than 0 and 1 for some reason.
 \note This function MUST call URenderDevice::Viewport->ResizeViewport() or the game will stall.
 */
 UBOOL UVulkan1RenderDevice::SetRes(INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen)
 {
-	UBOOL Result = URenderDevice::Viewport->ResizeViewport(Fullscreen ? (BLIT_Fullscreen) : (BLIT_HardwarePaint), NewX, NewY, NewColorBytes);
+	const UBOOL result = URenderDevice::Viewport->ResizeViewport(Fullscreen ? (BLIT_Fullscreen) : (BLIT_HardwarePaint), NewX, NewY, NewColorBytes);
 
-	return Result;
+	return result;
 }
 
 /**
@@ -398,7 +394,7 @@ Used for 2D UI elements, coronas, etc.
 \param Y Y coord in screen space.
 \param XL Width in pixels
 \param YL Height in pixels
-\param U Texure U coordinate for left.
+\param U Texture U coordinate for left.
 \param V Texture V coordinate for top.
 \param UL U+UL is coordinate for right.
 \param VL V+VL is coordinate for bottom.
@@ -434,7 +430,7 @@ void UVulkan1RenderDevice::Draw2DPoint(FSceneNode* Frame, FPlane Color, DWORD Li
 
 /**
 Clear the depth buffer. Used to draw the skybox behind the rest of the geometry, and weapon in front.
-\note It is important that any vertex buffer contents be commited before actually clearing the depth!
+\note It is important that any vertex buffer contents be committed before actually clearing the depth!
 */
 void UVulkan1RenderDevice::ClearZ(FSceneNode* Frame)
 {
