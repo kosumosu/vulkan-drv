@@ -48,3 +48,4 @@ Temporary Items
 *.user
 /*.VC.db
 /.vs
+/build

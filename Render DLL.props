@@ -6,6 +6,8 @@
   <PropertyGroup>
     <_ProjectFileVersion>14.0.25420.1</_ProjectFileVersion>
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build\output\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -22,9 +24,9 @@
 copy "$(ProjectDir)$(TargetName).int" "$(GAMEDIR)\system\"
 copy "$(TargetPath)" "$(GAMEDIR)\system\"
 
-mkdir "$(SolutionDir)packages\$(GAMENAME)"
-copy "$(ProjectDir)$(TargetName).int" "$(SolutionDir)\packages\$(GAMENAME)"
-copy "$(TargetPath)" "$(SolutionDir)\packages\$(GAMENAME)"
+mkdir "$(OutDir)packages\$(GAMENAME)"
+copy "$(ProjectDir)$(TargetName).int" "$(OutDir)packages\$(GAMENAME)"
+copy "$(TargetPath)" "$(OutDir)packages\$(GAMENAME)"
 </Command>
     </PostBuildEvent>
     <PreBuildEvent>
