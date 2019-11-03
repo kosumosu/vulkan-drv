@@ -10,9 +10,10 @@ namespace utils
 		return std::array<TElement, _Size>{array};
 	}
 
-	template <typename TElement, typename ... TElements, class = std::enable_if_t<std::conjunction<std::is_constructible<TElement, TElements>...>::value>>
+	template <typename TElement, typename ... TElements>
 	constexpr std::array<TElement, sizeof...(TElements)> make_array(TElements&& ... elements)
 	{
+		static_assert(std::conjunction<std::is_constructible<TElement, TElements>...>::value, "Array element type must be constructible from each of the passed item types");
 		return std::array<TElement, sizeof...(TElements)>{elements...};
 	}
 
