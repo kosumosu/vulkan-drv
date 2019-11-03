@@ -77,14 +77,14 @@ private:
 	};
 
 private:
-	vk::Instance _instance;
-	vk::Device _device;
-	size_t _presentationQueueFamilyIndex;
-	size_t _renderingQueueFamilyIndex;
-	vk::CommandPool _presentationCommandPool;
-	vk::CommandPool _renderingCommandPool;
+	vk::Instance instance_;
+	vk::Device device_;
+	size_t presentationQueueFamilyIndex_;
+	size_t renderingQueueFamilyIndex_;
+	vk::CommandPool presentationCommandPool_;
+	vk::CommandPool renderingCommandPool_;
 
-	vk::DebugReportCallbackEXT _debugCallbackHandle;
+	vk::DebugReportCallbackEXT debugCallbackHandle_;
 
 private:
 	static VkBool32 VKAPI_CALL VulkanDebugCallback(
@@ -98,8 +98,9 @@ private:
 		void* pUserData);
 
 	static void DebugPrint(const std::wstring& message);
-	std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice>& physicalDevices,
-	                                                             const vk::SurfaceKHR& presentationSurface) const;
-	void InitVirtualDevice(UViewport* InViewport);
-	void CreateVirtualDevice(UViewport* InViewport, vk::ResultValueType<vk::Device>::type& device);
+
+	
+	[[nodiscard]] std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice>& physicalDevices,
+	                                                                           const vk::SurfaceKHR& presentationSurface) const;
+	void InitVirtualDevice(UViewport* inViewport);
 };

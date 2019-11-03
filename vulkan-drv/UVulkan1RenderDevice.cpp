@@ -62,7 +62,7 @@ void UVulkan1RenderDevice::InitVulkanInstance()
 		.setPpEnabledLayerNames(layers.data())
 		.setEnabledLayerCount(layers.size());
 
-	_instance = vk::createInstance(instanceCreateInfo);
+	instance_ = vk::createInstance(instanceCreateInfo);
 
 	vk::DebugReportCallbackCreateInfoEXT debugCallbackInfo;
 	debugCallbackInfo
@@ -70,7 +70,7 @@ void UVulkan1RenderDevice::InitVulkanInstance()
 		.setPfnCallback(VulkanDebugCallback)
 		.setPUserData(this);
 
-	_debugCallbackHandle = _instance.createDebugReportCallbackEXT(debugCallbackInfo);
+	debugCallbackHandle_ = instance_.createDebugReportCallbackEXT(debugCallbackInfo);
 }
 
 VkBool32 VKAPI_CALL UVulkan1RenderDevice::VulkanDebugCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t srcObject,
@@ -165,17 +165,17 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 	return std::nullopt;
 }
 
-void UVulkan1RenderDevice::InitVirtualDevice(UViewport* InViewport)
+void UVulkan1RenderDevice::InitVirtualDevice(UViewport* inViewport)
 {
 	vk::Win32SurfaceCreateInfoKHR surfaceInfo;
 	surfaceInfo
 		.setHinstance(GetModuleHandle(nullptr))
-		.setHwnd(static_cast<HWND>(InViewport->GetWindow()));
+		.setHwnd(static_cast<HWND>(inViewport->GetWindow()));
 
 
-	const auto presentationSurface = _instance.createWin32SurfaceKHR(surfaceInfo);
+	const auto presentationSurface = instance_.createWin32SurfaceKHR(surfaceInfo);
 
-	const auto physicalDevices = _instance.enumeratePhysicalDevices();
+	const auto physicalDevices = instance_.enumeratePhysicalDevices();
 	if (physicalDevices.empty())
 		throw std::runtime_error("Vulkan reported no devices.");
 
@@ -208,9 +208,9 @@ void UVulkan1RenderDevice::InitVirtualDevice(UViewport* InViewport)
 	ss << "Found device: \"" << deviceSearchResult->device.getProperties().deviceName << "\"";
 	DebugPrint(ss.str());
 
-	_device = deviceSearchResult->device.createDevice(deviceInfo);
-	_presentationQueueFamilyIndex = deviceSearchResult->presentationQueueFamilyIndex;
-	_renderingQueueFamilyIndex = deviceSearchResult->renderingQueueFamilyIndex;
+	device_ = deviceSearchResult->device.createDevice(deviceInfo);
+	presentationQueueFamilyIndex_ = deviceSearchResult->presentationQueueFamilyIndex;
+	renderingQueueFamilyIndex_ = deviceSearchResult->renderingQueueFamilyIndex;
 }
 
 /**
@@ -269,13 +269,13 @@ UBOOL UVulkan1RenderDevice::Init(UViewport* InViewport, INT NewX, INT NewY, INT 
 
 	vk::CommandPoolCreateInfo presentationCommandPoolCreateInfo;
 	presentationCommandPoolCreateInfo
-		.setQueueFamilyIndex(_presentationQueueFamilyIndex);
-	_presentationCommandPool = _device.createCommandPool(presentationCommandPoolCreateInfo);
+		.setQueueFamilyIndex(presentationQueueFamilyIndex_);
+	presentationCommandPool_ = device_.createCommandPool(presentationCommandPoolCreateInfo);
 
 	vk::CommandPoolCreateInfo renderingCommandPoolCreateInfo;
 	renderingCommandPoolCreateInfo
-		.setQueueFamilyIndex(_renderingQueueFamilyIndex);
-	_renderingCommandPool = _device.createCommandPool(presentationCommandPoolCreateInfo);
+		.setQueueFamilyIndex(renderingQueueFamilyIndex_);
+	renderingCommandPool_ = device_.createCommandPool(presentationCommandPoolCreateInfo);
 
 	return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
 }
@@ -300,8 +300,8 @@ Cleanup.
 */
 void UVulkan1RenderDevice::Exit()
 {
-	_instance.destroyDebugReportCallbackEXT(_debugCallbackHandle);
-	_instance.destroy();
+	instance_.destroyDebugReportCallbackEXT(debugCallbackHandle_);
+	instance_.destroy();
 }
 
 /**
