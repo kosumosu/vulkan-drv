@@ -93,12 +93,17 @@ private:
 private:
 	vk::Instance instance_;
 	vk::Device logicalDevice_;
+	
 	size_t presentationQueueFamilyIndex_;
 	size_t renderingQueueFamilyIndex_;
+	vk::Queue renderingQueue_;
+	vk::Queue presentationQueue_;
+	
 	vk::CommandPool presentationCommandPool_;
 	vk::CommandPool renderingCommandPool_;
 
 	vk::DebugReportCallbackEXT debugCallbackHandle_;
+	
 
 private:
 	static VkBool32 VKAPI_CALL VulkanDebugCallback(

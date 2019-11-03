@@ -54,25 +54,21 @@ void UVulkan1RenderDevice::InitVulkanInstance()
 #endif
 	);
 
-	vk::InstanceCreateInfo instanceCreateInfo;
-	instanceCreateInfo
+	instance_ = vk::createInstance(
+		vk::InstanceCreateInfo()
 		.setPApplicationInfo(&appInfo)
 		.setPpEnabledExtensionNames(extensions.data())
 		.setEnabledExtensionCount(extensions.size())
 		.setPpEnabledLayerNames(layers.data())
-		.setEnabledLayerCount(layers.size());
+		.setEnabledLayerCount(layers.size()));
 
-	instance_ = vk::createInstance(instanceCreateInfo);
-
-	vk::DebugReportCallbackCreateInfoEXT debugCallbackInfo;
-	debugCallbackInfo
+	debugCallbackHandle_ = instance_.createDebugReportCallbackEXT(
+		vk::DebugReportCallbackCreateInfoEXT()
 		.setFlags(
 			vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::ePerformanceWarning | vk::
 			DebugReportFlagBitsEXT::eDebug | vk::DebugReportFlagBitsEXT::eInformation)
 		.setPfnCallback(VulkanDebugCallback)
-		.setPUserData(this);
-
-	debugCallbackHandle_ = instance_.createDebugReportCallbackEXT(debugCallbackInfo);
+		.setPUserData(this));
 }
 
 VkBool32 VKAPI_CALL UVulkan1RenderDevice::VulkanDebugCallback(
@@ -144,7 +140,7 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 			continue;
 
 		const auto properties = physicalDevice.getProperties();
-		
+
 		const auto queueFamilies = physicalDevice.getQueueFamilyProperties();
 		const auto renderingQueueIt = std::find_if(
 			queueFamilies.begin(),
@@ -224,18 +220,19 @@ void UVulkan1RenderDevice::InitLogicalDevice(UViewport* inViewport)
 
 	vk::PhysicalDeviceFeatures features;
 	features.setTextureCompressionBC(VK_TRUE);
-
-	vk::DeviceCreateInfo deviceInfo;
-	deviceInfo
+	logicalDevice_ = deviceSearchResult->device.createDevice(
+		vk::DeviceCreateInfo()
 		.setPpEnabledExtensionNames(&extensions[0])
 		.setEnabledExtensionCount(extensions.size())
 		.setPQueueCreateInfos(queueInfos.data())
 		.setQueueCreateInfoCount(queueInfos.size())
-		.setPEnabledFeatures(&features);
+		.setPEnabledFeatures(&features));
 
-	logicalDevice_ = deviceSearchResult->device.createDevice(deviceInfo);
 	presentationQueueFamilyIndex_ = deviceSearchResult->presentationQueueFamilyIndex;
 	renderingQueueFamilyIndex_ = deviceSearchResult->renderingQueueFamilyIndex;
+
+	renderingQueue_ = logicalDevice_.getQueue(renderingQueueFamilyIndex_, 0);
+	presentationQueue_ = logicalDevice_.getQueue(presentationQueueFamilyIndex_, 0);
 
 	DebugPrint(L"Device created.");
 }
@@ -294,15 +291,8 @@ UBOOL UVulkan1RenderDevice::Init(UViewport* InViewport, INT NewX, INT NewY, INT 
 
 	InitLogicalDevice(InViewport);
 
-	vk::CommandPoolCreateInfo presentationCommandPoolCreateInfo;
-	presentationCommandPoolCreateInfo
-		.setQueueFamilyIndex(presentationQueueFamilyIndex_);
-	presentationCommandPool_ = logicalDevice_.createCommandPool(presentationCommandPoolCreateInfo);
-
-	vk::CommandPoolCreateInfo renderingCommandPoolCreateInfo;
-	renderingCommandPoolCreateInfo
-		.setQueueFamilyIndex(renderingQueueFamilyIndex_);
-	renderingCommandPool_ = logicalDevice_.createCommandPool(presentationCommandPoolCreateInfo);
+	renderingCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(renderingQueueFamilyIndex_));
+	presentationCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(presentationQueueFamilyIndex_));
 
 	return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
 }
