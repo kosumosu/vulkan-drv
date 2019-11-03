@@ -165,7 +165,7 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 	return std::nullopt;
 }
 
-void UVulkan1RenderDevice::InitVirtualDevice(UViewport* inViewport)
+void UVulkan1RenderDevice::InitLogicalDevice(UViewport* inViewport)
 {
 	vk::Win32SurfaceCreateInfoKHR surfaceInfo;
 	surfaceInfo
@@ -177,19 +177,18 @@ void UVulkan1RenderDevice::InitVirtualDevice(UViewport* inViewport)
 
 	const auto physicalDevices = instance_.enumeratePhysicalDevices();
 	if (physicalDevices.empty())
-		throw std::runtime_error("Vulkan reported no devices.");
+		throw std::runtime_error{"Vulkan reported no devices."};
 
 	const auto deviceSearchResult = FindRequiredPhysicalDevice(physicalDevices, presentationSurface);
 
 	if (!deviceSearchResult)
-		throw std::runtime_error("Can't find supported device (presentation + graphics)");
+		throw std::runtime_error{"Can't find supported device (presentation + graphics)"};
 
-	const float priority = 1.0f;
 	std::vector<vk::DeviceQueueCreateInfo> queueInfos;
 
-	queueInfos.push_back(vk::DeviceQueueCreateInfo(vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1, &priority));
+	queueInfos.push_back(vk::DeviceQueueCreateInfo{vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1});
 	if (deviceSearchResult->presentationQueueFamilyIndex != deviceSearchResult->renderingQueueFamilyIndex)
-		queueInfos.push_back(vk::DeviceQueueCreateInfo(vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1, &priority));
+		queueInfos.push_back(vk::DeviceQueueCreateInfo{vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1});
 
 	constexpr auto extensions = utils::make_array<const char *>(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
@@ -208,7 +207,7 @@ void UVulkan1RenderDevice::InitVirtualDevice(UViewport* inViewport)
 	ss << "Found device: \"" << deviceSearchResult->device.getProperties().deviceName << "\"";
 	DebugPrint(ss.str());
 
-	device_ = deviceSearchResult->device.createDevice(deviceInfo);
+	logicalDevice_ = deviceSearchResult->device.createDevice(deviceInfo);
 	presentationQueueFamilyIndex_ = deviceSearchResult->presentationQueueFamilyIndex;
 	renderingQueueFamilyIndex_ = deviceSearchResult->renderingQueueFamilyIndex;
 }
@@ -265,17 +264,17 @@ UBOOL UVulkan1RenderDevice::Init(UViewport* InViewport, INT NewX, INT NewY, INT 
 
 	InitVulkanInstance();
 
-	InitVirtualDevice(InViewport);
+	InitLogicalDevice(InViewport);
 
 	vk::CommandPoolCreateInfo presentationCommandPoolCreateInfo;
 	presentationCommandPoolCreateInfo
 		.setQueueFamilyIndex(presentationQueueFamilyIndex_);
-	presentationCommandPool_ = device_.createCommandPool(presentationCommandPoolCreateInfo);
+	presentationCommandPool_ = logicalDevice_.createCommandPool(presentationCommandPoolCreateInfo);
 
 	vk::CommandPoolCreateInfo renderingCommandPoolCreateInfo;
 	renderingCommandPoolCreateInfo
 		.setQueueFamilyIndex(renderingQueueFamilyIndex_);
-	renderingCommandPool_ = device_.createCommandPool(presentationCommandPoolCreateInfo);
+	renderingCommandPool_ = logicalDevice_.createCommandPool(presentationCommandPoolCreateInfo);
 
 	return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
 }

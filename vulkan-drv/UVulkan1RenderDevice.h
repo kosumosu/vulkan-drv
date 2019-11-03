@@ -78,7 +78,7 @@ private:
 
 private:
 	vk::Instance instance_;
-	vk::Device device_;
+	vk::Device logicalDevice_;
 	size_t presentationQueueFamilyIndex_;
 	size_t renderingQueueFamilyIndex_;
 	vk::CommandPool presentationCommandPool_;
@@ -102,5 +102,5 @@ private:
 	
 	[[nodiscard]] std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice>& physicalDevices,
 	                                                                           const vk::SurfaceKHR& presentationSurface) const;
-	void InitVirtualDevice(UViewport* inViewport);
+	void InitLogicalDevice(UViewport* inViewport);
 };
