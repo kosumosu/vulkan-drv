@@ -66,15 +66,24 @@ void UVulkan1RenderDevice::InitVulkanInstance()
 
 	vk::DebugReportCallbackCreateInfoEXT debugCallbackInfo;
 	debugCallbackInfo
-		.setFlags(vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::ePerformanceWarning | vk::DebugReportFlagBitsEXT::eDebug | vk::DebugReportFlagBitsEXT::eInformation)
+		.setFlags(
+			vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::ePerformanceWarning | vk::
+			DebugReportFlagBitsEXT::eDebug | vk::DebugReportFlagBitsEXT::eInformation)
 		.setPfnCallback(VulkanDebugCallback)
 		.setPUserData(this);
 
 	debugCallbackHandle_ = instance_.createDebugReportCallbackEXT(debugCallbackInfo);
 }
 
-VkBool32 VKAPI_CALL UVulkan1RenderDevice::VulkanDebugCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t srcObject,
-                                                              size_t location, int32_t msgCode, const char* pLayerPrefix, const char* pMsg, void* pUserData)
+VkBool32 VKAPI_CALL UVulkan1RenderDevice::VulkanDebugCallback(
+	VkDebugReportFlagsEXT flags,
+	VkDebugReportObjectTypeEXT objType,
+	uint64_t srcObject,
+	size_t location,
+	int32_t msgCode,
+	const char* pLayerPrefix,
+	const char* pMsg,
+	void* pUserData)
 {
 	// Select prefix depending on flags passed to the callback
 	// Note that multiple flags may be set for a single validation message
@@ -125,15 +134,19 @@ void UVulkan1RenderDevice::DebugPrint(const std::wstring& message)
 }
 
 std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::FindRequiredPhysicalDevice(
-	const std::vector<vk::PhysicalDevice>& physicalDevices, const vk::SurfaceKHR& presentationSurface) const
+	const std::vector<vk::PhysicalDevice>& physicalDevices,
+	const vk::SurfaceKHR& presentationSurface) const
 {
 	for (const auto& physicalDevice : physicalDevices)
 	{
 		const auto queueFamilies = physicalDevice.getQueueFamilyProperties();
-		const auto renderingQueueIt = std::find_if(queueFamilies.begin(), queueFamilies.end(), [](const vk::QueueFamilyProperties& props)
-		{
-			return props.queueFlags & vk::QueueFlagBits::eGraphics;
-		});
+		const auto renderingQueueIt = std::find_if(
+			queueFamilies.begin(),
+			queueFamilies.end(),
+			[](const vk::QueueFamilyProperties& props)
+			{
+				return props.queueFlags & vk::QueueFlagBits::eGraphics;
+			});
 
 		if (renderingQueueIt == queueFamilies.end())
 			continue;
@@ -153,10 +166,13 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 		if (!hasPresentationQueue)
 			continue;
 
-		const auto presentationQueueIt = std::find_if(queueFamilies.begin(), queueFamilies.end(), [](const vk::QueueFamilyProperties& props)
-		{
-			return props.queueFlags & vk::QueueFlagBits::eGraphics;
-		});
+		const auto presentationQueueIt = std::find_if(
+			queueFamilies.begin(),
+			queueFamilies.end(),
+			[](const vk::QueueFamilyProperties& props)
+			{
+				return props.queueFlags & vk::QueueFlagBits::eGraphics;
+			});
 		const auto renderingQueueIndex = std::distance(queueFamilies.begin(), renderingQueueIt);
 
 		return DeviceSearchResult{physicalDevice, size_t(renderingQueueIndex), presentationQueueIndex};
@@ -408,8 +424,22 @@ Used for 2D UI elements, coronas, etc.
 The Z coordinate however is transformed and divided by W; then W is set to 1 in the shader to get correct depth and yet preserve X and Y.
 Other renderers take the opposite approach and multiply X by RProjZ*Z and Y by RProjZ*Z*aspect so they are preserved and then transform everything.
 */
-void UVulkan1RenderDevice::DrawTile(FSceneNode* Frame, FTextureInfo& Info, FLOAT X, FLOAT Y, FLOAT XL, FLOAT YL, FLOAT U, FLOAT V, FLOAT UL, FLOAT VL,
-                                    class FSpanBuffer* Span, FLOAT Z, FPlane Color, FPlane Fog, DWORD PolyFlags)
+void UVulkan1RenderDevice::DrawTile(
+	FSceneNode* Frame,
+	FTextureInfo& Info,
+	FLOAT X,
+	FLOAT Y,
+	FLOAT XL,
+	FLOAT YL,
+	FLOAT U,
+	FLOAT V,
+	FLOAT UL,
+	FLOAT VL,
+	class FSpanBuffer* Span,
+	FLOAT Z,
+	FPlane Color,
+	FPlane Fog,
+	DWORD PolyFlags)
 {
 }
 
