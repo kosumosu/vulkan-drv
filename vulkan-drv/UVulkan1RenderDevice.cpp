@@ -126,7 +126,7 @@ VkBool32 VKAPI_CALL UVulkan1RenderDevice::VulkanDebugCallback(
 	return VK_FALSE;
 }
 
-void UVulkan1RenderDevice::DebugPrint(const std::wstring& message)
+void UVulkan1RenderDevice::DebugPrint(const std::wstring_view& message)
 {
 	std::wstringstream ss;
 	ss << "[Vulkan1Drv] " << message;
@@ -139,13 +139,19 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 {
 	for (const auto& physicalDevice : physicalDevices)
 	{
+		const auto features = physicalDevice.getFeatures();
+		if (!features.textureCompressionBC)
+			continue;
+
+		const auto properties = physicalDevice.getProperties();
+		
 		const auto queueFamilies = physicalDevice.getQueueFamilyProperties();
 		const auto renderingQueueIt = std::find_if(
 			queueFamilies.begin(),
 			queueFamilies.end(),
 			[](const vk::QueueFamilyProperties& props)
 			{
-				return props.queueFlags & vk::QueueFlagBits::eGraphics;
+				return props.queueCount != 0 && props.queueFlags & vk::QueueFlagBits::eGraphics;
 			});
 
 		if (renderingQueueIt == queueFamilies.end())
@@ -153,12 +159,13 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 
 		bool hasPresentationQueue = false;
 		size_t presentationQueueIndex = 0;
-		for (size_t i = 0; i < queueFamilies.size(); ++i)
+
+		for (const auto& [index, family] : utils::indexed(queueFamilies))
 		{
-			if (physicalDevice.getSurfaceSupportKHR(i, presentationSurface))
+			if (family.queueCount != 0 && physicalDevice.getSurfaceSupportKHR(index, presentationSurface))
 			{
 				hasPresentationQueue = true;
-				presentationQueueIndex = i;
+				presentationQueueIndex = index;
 				break;
 			}
 		}
@@ -175,7 +182,7 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 			});
 		const auto renderingQueueIndex = std::distance(queueFamilies.begin(), renderingQueueIt);
 
-		return DeviceSearchResult{physicalDevice, size_t(renderingQueueIndex), presentationQueueIndex};
+		return DeviceSearchResult{physicalDevice, properties, size_t(renderingQueueIndex), presentationQueueIndex};
 	}
 
 	return std::nullopt;
@@ -200,11 +207,18 @@ void UVulkan1RenderDevice::InitLogicalDevice(UViewport* inViewport)
 	if (!deviceSearchResult)
 		throw std::runtime_error{"Can't find supported device (presentation + graphics)"};
 
+	std::wstringstream ss;
+	ss << "Picked device: \"" << deviceSearchResult->device.getProperties().deviceName
+		<< "\" with rendering queue family #" << deviceSearchResult->
+		renderingQueueFamilyIndex << " and presentation queue family #" << deviceSearchResult->presentationQueueFamilyIndex;
+	DebugPrint(ss.str());
+
+	const float priority = 1.0f;
 	std::vector<vk::DeviceQueueCreateInfo> queueInfos;
 
-	queueInfos.push_back(vk::DeviceQueueCreateInfo{vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1});
+	queueInfos.push_back(vk::DeviceQueueCreateInfo{vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1, &priority});
 	if (deviceSearchResult->presentationQueueFamilyIndex != deviceSearchResult->renderingQueueFamilyIndex)
-		queueInfos.push_back(vk::DeviceQueueCreateInfo{vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1});
+		queueInfos.push_back(vk::DeviceQueueCreateInfo{vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1, &priority});
 
 	constexpr auto extensions = utils::make_array<const char *>(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
@@ -219,13 +233,11 @@ void UVulkan1RenderDevice::InitLogicalDevice(UViewport* inViewport)
 		.setQueueCreateInfoCount(queueInfos.size())
 		.setPEnabledFeatures(&features);
 
-	std::wstringstream ss;
-	ss << "Found device: \"" << deviceSearchResult->device.getProperties().deviceName << "\"";
-	DebugPrint(ss.str());
-
 	logicalDevice_ = deviceSearchResult->device.createDevice(deviceInfo);
 	presentationQueueFamilyIndex_ = deviceSearchResult->presentationQueueFamilyIndex;
 	renderingQueueFamilyIndex_ = deviceSearchResult->renderingQueueFamilyIndex;
+
+	DebugPrint(L"Device created.");
 }
 
 /**

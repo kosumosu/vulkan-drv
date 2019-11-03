@@ -85,6 +85,7 @@ private:
 	struct DeviceSearchResult
 	{
 		vk::PhysicalDevice device;
+		vk::PhysicalDeviceProperties deviceProperties;
 		size_t renderingQueueFamilyIndex;
 		size_t presentationQueueFamilyIndex;
 	};
@@ -110,7 +111,7 @@ private:
 		const char* pMsg,
 		void* pUserData);
 
-	static void DebugPrint(const std::wstring& message);
+	static void DebugPrint(const std::wstring_view& message);
 
 	[[nodiscard]] std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice>& physicalDevices,
 		const vk::SurfaceKHR& presentationSurface) const;
