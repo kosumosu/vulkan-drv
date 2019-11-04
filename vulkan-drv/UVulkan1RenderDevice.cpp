@@ -591,7 +591,7 @@ private:
 
 			const auto suitablePresentationQueue = utils::maybeFirst(
 				queueFamilies | boost::adaptors::indexed(),
-				[](const auto& props)
+				[&](const auto& props)
 				{
 					return props.value().queueCount != 0 && physicalDevice.getSurfaceSupportKHR(props.index(), presentationSurface);
 				});
@@ -599,7 +599,7 @@ private:
 			if (!suitablePresentationQueue)
 				continue;
 
-			return DeviceSearchResult{physicalDevice, properties, size_t(suitableQueueFamily->index()), suitablePresentationQueue->index()};
+			return DeviceSearchResult{physicalDevice, properties, size_t(suitableQueueFamily->index()), size_t(suitablePresentationQueue->index())};
 		}
 
 		return std::nullopt;
