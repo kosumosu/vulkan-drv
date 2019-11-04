@@ -1744,7 +1744,6 @@
     <ClInclude Include="..\Games\Rune_100\Core\Inc\UnVcWn32SSE.h">
       <Filter>Game Headers\Rune_100</Filter>
     </ClInclude>
-    <ClInclude Include="UVulkan1RenderDevice.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="polyflags.h" />
     <ClInclude Include="ProperWindows.h" />

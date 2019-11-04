@@ -7224,7 +7224,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Rune 1.00 Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="utils.hpp" />
-    <ClInclude Include="UVulkan1RenderDevice.h" />
     <ClInclude Include="polyflags.h" />
     <ClInclude Include="ProperWindows.h" />
     <ClInclude Include="resource.h" />
