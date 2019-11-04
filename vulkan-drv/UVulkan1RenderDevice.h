@@ -8,6 +8,7 @@
 #include <string>
 
 #include <vulkan/vulkan.hpp>
+#include <unordered_set>
 
 class UVulkan1RenderDevice : public URenderDevice
 {
@@ -118,8 +119,10 @@ private:
 
 	static void DebugPrint(const std::wstring_view& message);
 
-	[[nodiscard]] std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(const std::vector<vk::PhysicalDevice>& physicalDevices,
-		const vk::SurfaceKHR& presentationSurface) const;
+	[[nodiscard]] std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(
+		const std::vector<vk::PhysicalDevice>& physicalDevices,
+		const vk::SurfaceKHR& presentationSurface,
+		const std::unordered_set<std::string_view>& requiredExtensions) const;
 	
 	void InitLogicalDevice(UViewport* inViewport);
 };

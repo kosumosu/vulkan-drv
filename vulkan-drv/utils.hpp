@@ -1,6 +1,8 @@
 #pragma once
 #include <array>
+#include <boost/range/iterator_range.hpp>
 
+#include <unordered_set>
 
 namespace utils
 {
@@ -99,5 +101,11 @@ namespace utils
 	auto indexed(const TCollection& collection)
 	{
 		return detail::IndexedCollectionWrapper<typename TCollection::const_iterator>(collection.begin(), collection.end());
+	}
+
+	template <class TRange>
+	auto to_unordered_set(const TRange& range)
+	{
+		return boost::copy_range<std::unordered_set<typename TRange::value_type>>(range);
 	}
 }

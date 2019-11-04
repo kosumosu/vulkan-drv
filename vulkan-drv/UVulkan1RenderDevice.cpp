@@ -1,8 +1,13 @@
 #include "UVulkan1RenderDevice.h"
 #include "resource.h"
 #include "utils.hpp"
+
+#include <boost/range/adaptors.hpp>
+#include <boost/range/algorithm/set_algorithm.hpp>
+
 #include <iostream>
 #include <sstream>
+#include <unordered_set>
 
 using namespace std::string_literals;
 
@@ -115,7 +120,7 @@ VkBool32 VKAPI_CALL UVulkan1RenderDevice::VulkanDebugCallback(
 	}
 
 	// Display message to default output (console if activated)
-	text << " [" << pLayerPrefix << "] Code " << msgCode << " : " << pMsg << "\n";
+	text << " [" << pLayerPrefix << "] Code " << msgCode << " : " << pMsg;
 
 	DebugPrint(text.str());
 
@@ -131,7 +136,8 @@ void UVulkan1RenderDevice::DebugPrint(const std::wstring_view& message)
 
 std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::FindRequiredPhysicalDevice(
 	const std::vector<vk::PhysicalDevice>& physicalDevices,
-	const vk::SurfaceKHR& presentationSurface) const
+	const vk::SurfaceKHR& presentationSurface,
+	const std::unordered_set<std::string_view>& requiredExtensions) const
 {
 	for (const auto& physicalDevice : physicalDevices)
 	{
@@ -140,6 +146,26 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 			continue;
 
 		const auto properties = physicalDevice.getProperties();
+
+		const auto extensionProperties = physicalDevice.enumerateDeviceExtensionProperties();
+
+		if (!boost::includes(
+			extensionProperties | boost::adaptors::transformed([](const vk::ExtensionProperties& props) { return std::string_view(props.extensionName); }),
+			requiredExtensions))
+		{
+			continue;
+		}
+
+		//const auto it = std::find_if(
+		//	extensionProperties.begin(),
+		//	extensionProperties.end(),
+		//	[](const vk::ExtensionProperties& prop)
+		//	{
+		//		return prop.extensionName == std::string_view(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+		//	});
+
+		//if (it == extensionProperties.end())
+		//	continue;
 
 		const auto queueFamilies = physicalDevice.getQueueFamilyProperties();
 		const auto renderingQueueIt = std::find_if(
@@ -186,11 +212,12 @@ std::optional<UVulkan1RenderDevice::DeviceSearchResult> UVulkan1RenderDevice::Fi
 
 void UVulkan1RenderDevice::InitLogicalDevice(UViewport* inViewport)
 {
+	constexpr auto deviceExtensions = utils::make_array<const char *>(VK_KHR_SWAPCHAIN_EXTENSION_NAME, "DICKS");
+
 	vk::Win32SurfaceCreateInfoKHR surfaceInfo;
 	surfaceInfo
 		.setHinstance(GetModuleHandle(nullptr))
 		.setHwnd(static_cast<HWND>(inViewport->GetWindow()));
-
 
 	const auto presentationSurface = instance_.createWin32SurfaceKHR(surfaceInfo);
 
@@ -198,7 +225,13 @@ void UVulkan1RenderDevice::InitLogicalDevice(UViewport* inViewport)
 	if (physicalDevices.empty())
 		throw std::runtime_error{"Vulkan reported no devices."};
 
-	const auto deviceSearchResult = FindRequiredPhysicalDevice(physicalDevices, presentationSurface);
+	const auto deviceExtensionSet = utils::to_unordered_set(
+		deviceExtensions | boost::adaptors::transformed([](const char* charArray) { return std::string_view(charArray); }));
+
+	const auto deviceSearchResult = FindRequiredPhysicalDevice(
+		physicalDevices,
+		presentationSurface,
+		utils::to_unordered_set(deviceExtensions | boost::adaptors::transformed([](const char* charArray) { return std::string_view(charArray); })));
 
 	if (!deviceSearchResult)
 		throw std::runtime_error{"Can't find supported device (presentation + graphics)"};
@@ -216,14 +249,13 @@ void UVulkan1RenderDevice::InitLogicalDevice(UViewport* inViewport)
 	if (deviceSearchResult->presentationQueueFamilyIndex != deviceSearchResult->renderingQueueFamilyIndex)
 		queueInfos.push_back(vk::DeviceQueueCreateInfo{vk::DeviceQueueCreateFlags(), deviceSearchResult->presentationQueueFamilyIndex, 1, &priority});
 
-	constexpr auto extensions = utils::make_array<const char *>(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
 	vk::PhysicalDeviceFeatures features;
 	features.setTextureCompressionBC(VK_TRUE);
 	logicalDevice_ = deviceSearchResult->device.createDevice(
 		vk::DeviceCreateInfo()
-		.setPpEnabledExtensionNames(&extensions[0])
-		.setEnabledExtensionCount(extensions.size())
+		.setPpEnabledExtensionNames(&deviceExtensions[0])
+		.setEnabledExtensionCount(deviceExtensions.size())
 		.setPQueueCreateInfos(queueInfos.data())
 		.setQueueCreateInfoCount(queueInfos.size())
 		.setPEnabledFeatures(&features));
@@ -266,35 +298,45 @@ Initialization of renderer.
 */
 UBOOL UVulkan1RenderDevice::Init(UViewport* InViewport, INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen)
 {
-	Viewport = InViewport;
-	SpanBased = 0;
-	FullscreenOnly = 0;
-	SupportsFogMaps = 1;
-	SupportsTC = 1;
-	SupportsDistanceFog = 0;
-	SupportsLazyTextures = 0;
+	try
+	{
+		Viewport = InViewport;
+		SpanBased = 0;
+		FullscreenOnly = 0;
+		SupportsFogMaps = 1;
+		SupportsTC = 1;
+		SupportsDistanceFog = 0;
+		SupportsLazyTextures = 0;
 
-	//Force on detail options as not all games give easy access to these
-	Coronas = 1;
+		//Force on detail options as not all games give easy access to these
+		Coronas = 1;
 #if (!UNREALGOLD)
-	DetailTextures = 1;
+		DetailTextures = 1;
 #endif
-	ShinySurfaces = 1;
-	HighDetailActors = 1;
-	VolumetricLighting = 1;
-	//PrecacheOnFlip = 1; //Turned on to immediately recache on init (prevents lack of textures after fullscreen switch)
+		ShinySurfaces = 1;
+		HighDetailActors = 1;
+		VolumetricLighting = 1;
+		//PrecacheOnFlip = 1; //Turned on to immediately recache on init (prevents lack of textures after fullscreen switch)
 
-	//Do some nice compatibility fixing: set processor affinity to single-cpu
-	//SetProcessAffinityMask(GetCurrentProcess(), 0x1);
+		//Do some nice compatibility fixing: set processor affinity to single-cpu
+		//SetProcessAffinityMask(GetCurrentProcess(), 0x1);
 
-	InitVulkanInstance();
+		InitVulkanInstance();
 
-	InitLogicalDevice(InViewport);
+		InitLogicalDevice(InViewport);
 
-	renderingCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(renderingQueueFamilyIndex_));
-	presentationCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(presentationQueueFamilyIndex_));
+		renderingCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(renderingQueueFamilyIndex_));
+		presentationCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(presentationQueueFamilyIndex_));
 
-	return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
+		return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
+	}
+	catch (const std::exception& ex)
+	{
+		std::wstringstream ss;
+		ss << "Exception in " << __FUNCTION__ << " with message: " << ex.what();
+		DebugPrint(ss.str());
+		throw; // If we return false, UE just picks up fallback renderer silently. But we want it to be loud!
+	}
 }
 
 /**
