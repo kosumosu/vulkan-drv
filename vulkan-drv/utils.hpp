@@ -3,6 +3,8 @@
 #include <boost/range/iterator_range.hpp>
 
 #include <unordered_set>
+#include <optional>
+#include <boost/optional/optional.hpp>
 
 namespace utils
 {
@@ -38,86 +40,40 @@ namespace utils
 		return _Size;
 	}
 
-	namespace detail
-	{
-		// An iterator that is analogous to boost ranges indexed iterator adapter
-		// https://www.boost.org/doc/libs/1_68_0/libs/range/doc/html/range/reference/adaptors/reference/indexed.html
-		// Though, it does not fully satisfy C++ Iterator named requirement yet
-		// https://en.cppreference.com/w/cpp/named_req/Iterator
-		template <class TBaseIterator>
-		class IndexedCollectionWrapper
-		{
-		public:
-			using base_reference = typename TBaseIterator::reference;
-			using reference = std::pair<size_t, base_reference>;
-
-			class iterator
-			{
-			public:
-				iterator(TBaseIterator current, size_t index)
-					: current_(std::move(current))
-					, index_(index)
-				{
-				}
-
-				iterator& operator ++() noexcept(noexcept(++current_))
-				{
-					++current_;
-					++index_;
-					return *this;
-				}
-
-				bool operator !=(const iterator& other)
-				{
-					return current_ != other.current_;
-				}
-
-				bool operator ==(const iterator& other)
-				{
-					return current_ == other.current_;
-				}
-
-				reference operator*()
-				{
-					return reference(index_, *current_);
-				}
-
-			private:
-				TBaseIterator current_;
-				size_t index_;
-			};
-
-			IndexedCollectionWrapper(TBaseIterator begin, TBaseIterator end)
-				: begin_(std::move(begin))
-				, end_(std::move(end))
-			{
-			}
-
-			[[nodiscard]] iterator begin() const
-			{
-				return iterator(begin_, 0);
-			}
-
-			[[nodiscard]] iterator end() const
-			{
-				return iterator(end_, 0); // Index here makes no sense
-			}
-
-		private:
-			TBaseIterator begin_;
-			TBaseIterator end_;
-		};
-	}
-
-	template <class TCollection>
-	auto indexed(const TCollection& collection)
-	{
-		return detail::IndexedCollectionWrapper<typename TCollection::const_iterator>(collection.begin(), collection.end());
-	}
-
 	template <class TRange>
 	auto to_unordered_set(const TRange& range)
 	{
 		return boost::copy_range<std::unordered_set<typename TRange::value_type>>(range);
+	}
+
+	template <class TIteratorBegin, class TIteratorEnd, class TPredicate>
+	auto maybeFirst(
+		TIteratorBegin begin,
+		TIteratorEnd end,
+		const TPredicate& predicate) -> boost::optional<typename TIteratorBegin::reference>
+	// Have to use boost::optional because C++17 std::optional does not support references
+	
+	{
+		const auto it = std::find_if(begin, end, predicate);
+		if (it == end)
+		{
+			return boost::none;
+		}
+		else
+		{
+			return *it;
+		}
+	}
+
+	template <class TCollection, class TPredicate>
+	auto maybeFirst(TCollection collection, const TPredicate& predicate)
+	{
+		return maybeFirst(std::begin(collection), std::end(collection), predicate);
+	}
+
+	template <class TCollection, class TPredicate>
+	bool contains(TCollection collection, const TPredicate& predicate)
+	{
+		return maybeFirst(std::begin(collection), std::end(collection), predicate);
 	}
 }

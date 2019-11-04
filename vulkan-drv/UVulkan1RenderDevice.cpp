@@ -575,55 +575,31 @@ private:
 				continue;
 			}
 
-			//const auto it = std::find_if(
-			//	extensionProperties.begin(),
-			//	extensionProperties.end(),
-			//	[](const vk::ExtensionProperties& prop)
-			//	{
-			//		return prop.extensionName == std::string_view(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
-			//	});
-
-			//if (it == extensionProperties.end())
-			//	continue;
-
 			const auto queueFamilies = physicalDevice.getQueueFamilyProperties();
-			const auto renderingQueueIt = std::find_if(
-				queueFamilies.begin(),
-				queueFamilies.end(),
-				[](const vk::QueueFamilyProperties& props)
+
+			const auto suitableQueueFamily = utils::maybeFirst(
+				queueFamilies | boost::adaptors::indexed(),
+				[](const auto& props)
 				{
-					return props.queueCount != 0 && props.queueFlags & vk::QueueFlagBits::eGraphics;
+					return props.value().queueCount != 0 && props.value().queueFlags & vk::QueueFlagBits::eGraphics;
 				});
 
-			if (renderingQueueIt == queueFamilies.end())
-				continue;
-
-			bool hasPresentationQueue = false;
-			size_t presentationQueueIndex = 0;
-
-			for (const auto& [index, family] : utils::indexed(queueFamilies))
+			if (!suitableQueueFamily)
 			{
-				if (family.queueCount != 0 && physicalDevice.getSurfaceSupportKHR(index, presentationSurface))
-				{
-					hasPresentationQueue = true;
-					presentationQueueIndex = index;
-					break;
-				}
+				continue;
 			}
 
-			if (!hasPresentationQueue)
+			const auto suitablePresentationQueue = utils::maybeFirst(
+				queueFamilies | boost::adaptors::indexed(),
+				[](const auto& props)
+				{
+					return props.value().queueCount != 0 && physicalDevice.getSurfaceSupportKHR(props.index(), presentationSurface);
+				});
+
+			if (!suitablePresentationQueue)
 				continue;
 
-			const auto presentationQueueIt = std::find_if(
-				queueFamilies.begin(),
-				queueFamilies.end(),
-				[](const vk::QueueFamilyProperties& props)
-				{
-					return props.queueFlags & vk::QueueFlagBits::eGraphics;
-				});
-			const auto renderingQueueIndex = std::distance(queueFamilies.begin(), renderingQueueIt);
-
-			return DeviceSearchResult{physicalDevice, properties, size_t(renderingQueueIndex), presentationQueueIndex};
+			return DeviceSearchResult{physicalDevice, properties, size_t(suitableQueueFamily->index()), suitablePresentationQueue->index()};
 		}
 
 		return std::nullopt;
