@@ -6,6 +6,18 @@
 
 namespace utils
 {
+	template <class TStream>
+	void output(TStream& stream)
+	{
+	}
+
+	template <class TStream, class TArg, class ...TArgs>
+	void output(TStream& stream, const TArg& arg, const TArgs& ...args)
+	{
+		stream << arg;
+		output(stream, args...);
+	}
+
 	template <typename TElement, size_t _Size>
 	constexpr std::array<TElement, _Size> make_array(TElement (& array)[_Size])
 	{
@@ -38,7 +50,7 @@ namespace utils
 		public:
 			using base_reference = typename TBaseIterator::reference;
 			using reference = std::pair<size_t, base_reference>;
-			
+
 			class iterator
 			{
 			public:

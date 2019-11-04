@@ -20,6 +20,20 @@ using namespace std::string_literals;
 
 class UVulkan1RenderDevice : public URenderDevice
 {
+private:
+	vk::Instance instance_;
+	vk::Device logicalDevice_;
+
+	size_t presentationQueueFamilyIndex_;
+	size_t renderingQueueFamilyIndex_;
+	vk::Queue renderingQueue_;
+	vk::Queue presentationQueue_;
+
+	vk::CommandPool presentationCommandPool_;
+	vk::CommandPool renderingCommandPool_;
+
+	vk::DebugReportCallbackEXT debugCallbackHandle_;
+
 public:
 	UVulkan1RenderDevice()
 	{
@@ -101,9 +115,7 @@ public:
 		}
 		catch (const std::exception& ex)
 		{
-			std::wstringstream ss;
-			ss << "Exception in " << __FUNCTION__ << " with message: " << ex.what();
-			DebugPrint(ss.str());
+			DebugPrint("Exception in ", __FUNCTION__, " with message: ", ex.what());
 			throw; // If we return false, UE just picks up fallback renderer silently. But we want it to be loud!
 		}
 	}
@@ -487,20 +499,6 @@ private:
 		size_t presentationQueueFamilyIndex;
 	};
 
-private:
-	vk::Instance instance_;
-	vk::Device logicalDevice_;
-
-	size_t presentationQueueFamilyIndex_;
-	size_t renderingQueueFamilyIndex_;
-	vk::Queue renderingQueue_;
-	vk::Queue presentationQueue_;
-
-	vk::CommandPool presentationCommandPool_;
-	vk::CommandPool renderingCommandPool_;
-
-	vk::DebugReportCallbackEXT debugCallbackHandle_;
-
 
 private:
 	static VkBool32 VKAPI_CALL VulkanDebugCallback(
@@ -523,17 +521,17 @@ private:
 		if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT)
 		{
 			text << "ERROR:";
-		};
+		}
 		// Warnings may hint at unexpected / non-spec API usage
 		if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
 		{
 			text << "WARNING:";
-		};
+		}
 		// May indicate sub-optimal usage of the API
 		if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
 		{
 			text << "PERFORMANCE:";
-		};
+		}
 		// Informal messages that may become handy during debugging
 		if (flags & VK_DEBUG_REPORT_INFORMATION_BIT_EXT)
 		{
@@ -554,12 +552,6 @@ private:
 		return VK_FALSE;
 	}
 
-	static void DebugPrint(const std::wstring_view& message)
-	{
-		std::wstringstream ss;
-		ss << "[Vulkan1Drv] " << message;
-		GLog->Log(ss.str().c_str());
-	}
 
 	[[nodiscard]] std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(
 		const std::vector<vk::PhysicalDevice>& physicalDevices,
@@ -663,11 +655,14 @@ private:
 		if (!deviceSearchResult)
 			throw std::runtime_error{"Can't find supported device (presentation + graphics)"};
 
-		std::wstringstream ss;
-		ss << "Picked device: \"" << deviceSearchResult->device.getProperties().deviceName
-			<< "\" with rendering queue family #" << deviceSearchResult->
-			renderingQueueFamilyIndex << " and presentation queue family #" << deviceSearchResult->presentationQueueFamilyIndex;
-		DebugPrint(ss.str());
+		DebugPrint(
+			"Picked device: \"",
+			deviceSearchResult->device.getProperties().deviceName,
+			"\" with rendering queue family #",
+			deviceSearchResult->
+			renderingQueueFamilyIndex,
+			" and presentation queue family #",
+			deviceSearchResult->presentationQueueFamilyIndex);
 
 		const float priority = 1.0f;
 		std::vector<vk::DeviceQueueCreateInfo> queueInfos;
@@ -693,7 +688,17 @@ private:
 		renderingQueue_ = logicalDevice_.getQueue(renderingQueueFamilyIndex_, 0);
 		presentationQueue_ = logicalDevice_.getQueue(presentationQueueFamilyIndex_, 0);
 
-		DebugPrint(L"Device created.");
+		DebugPrint("Device created.");
+	}
+
+
+	template <class ... TArgs>
+	static void DebugPrint(const TArgs&... args)
+	{
+		std::wstringstream ss;
+		ss << "[Vulkan1Drv] ";
+		utils::output(ss, args...);
+		GLog->Log(ss.str().c_str());
 	}
 };
 
