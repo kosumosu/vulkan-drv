@@ -371,6 +371,7 @@
     <ClCompile Include="VulkanFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RendererSettings.h" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="polyflags.h" />
     <ClInclude Include="ProperWindows.h" />

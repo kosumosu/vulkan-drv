@@ -1,6 +1,7 @@
 //#include "UVulkan1RenderDevice.h"
 #include "resource.h"
 #include "utils.hpp"
+#include "RendererSettings.h"
 
 #include "ProperWindows.h"
 #include <Engine.h>
@@ -10,6 +11,7 @@
 
 #include <boost/range/adaptors.hpp>
 #include <boost/range/algorithm/set_algorithm.hpp>
+#include <boost/range/algorithm/for_each.hpp>
 
 #include <iostream>
 #include <optional>
@@ -18,16 +20,36 @@
 
 using namespace std::string_literals;
 
+struct SwapChainImage
+{
+	vk::Image image;
+	vk::ImageView view;
+};
+
 class UVulkan1RenderDevice : public URenderDevice
 {
 private:
+	RendererSettings settings_;
+
 	vk::Instance instance_;
+	vk::PhysicalDevice physicalDevice_;
 	vk::Device logicalDevice_;
+
+	vk::SurfaceKHR presentationSurface_;
+	vk::SurfaceCapabilitiesKHR presentationSurfaceCaps_;
+	std::vector<vk::SurfaceFormatKHR> availablePresentationSurfaceFormats_;
+	std::vector<vk::PresentModeKHR> availablePresentationModes_;
 
 	size_t presentationQueueFamilyIndex_;
 	size_t renderingQueueFamilyIndex_;
 	vk::Queue renderingQueue_;
 	vk::Queue presentationQueue_;
+
+	vk::SwapchainKHR swapChain_;
+	std::vector<SwapChainImage> swapChainImages_;
+	vk::Format presentationSurfaceFormat_;
+	vk::Extent2D presentationSurfaceExtent_;
+
 
 	vk::CommandPool presentationCommandPool_;
 	vk::CommandPool renderingCommandPool_;
@@ -35,6 +57,18 @@ private:
 	vk::DebugReportCallbackEXT debugCallbackHandle_;
 
 public:
+
+	/**
+	Constructor called by the game when the renderer is first created.
+	\note Required to compile for Unreal Tournament.
+	\note Binding settings to the preferences window needs to done here instead of in init() or the game crashes when starting a map if the renderer's been restarted at least once.
+	*/
+	// ReSharper disable once CppHidingFunction
+	void StaticConstructor()
+	{
+		settings_.presentationMode = PresentationMode::Immediate;
+	}
+
 	UVulkan1RenderDevice()
 	{
 		// Do not remove this constructor because without it, the game crashes when switching to fullscreen mode. Using C++11 "ctor() = default" does not help either.
@@ -51,7 +85,6 @@ DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config, Vulkan1Drv)
 DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 #endif
 
-public:
 	/**
 	Initialization of renderer.
 	- Set parent class options. Some of these are settings for the renderer to heed, others control what the game does.
@@ -108,8 +141,8 @@ public:
 
 			InitLogicalDevice(InViewport);
 
-			renderingCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(renderingQueueFamilyIndex_));
-			presentationCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(presentationQueueFamilyIndex_));
+			//renderingCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(renderingQueueFamilyIndex_));
+			//presentationCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(presentationQueueFamilyIndex_));
 
 			return SetRes(NewX, NewY, NewColorBytes, Fullscreen);
 		}
@@ -130,9 +163,19 @@ public:
 	*/
 	UBOOL SetRes(INT NewX, INT NewY, INT NewColorBytes, UBOOL Fullscreen) override
 	{
-		const UBOOL result = URenderDevice::Viewport->ResizeViewport(Fullscreen ? (BLIT_Fullscreen) : (BLIT_HardwarePaint), NewX, NewY, NewColorBytes);
+		if (!Viewport->ResizeViewport(Fullscreen ? (BLIT_Fullscreen) : (BLIT_HardwarePaint), NewX, NewY, NewColorBytes))
+			return false;
 
-		return result;
+		try
+		{
+			InitSwapChain();
+			return true;
+		}
+		catch (const std::exception& ex)
+		{
+			DebugPrint("Exception in ", __FUNCTION__, " with message: ", ex.what());
+			throw;
+		}
 	}
 
 	/**
@@ -140,6 +183,13 @@ public:
 	*/
 	void Exit() override
 	{
+		for (auto& swapChainImage : swapChainImages_)
+		{
+			logicalDevice_.destroyImageView(swapChainImage.view);
+		}
+		
+		logicalDevice_.destroySwapchainKHR(swapChain_);
+		logicalDevice_.destroy();
 		instance_.destroyDebugReportCallbackEXT(debugCallbackHandle_);
 		instance_.destroy();
 	}
@@ -369,16 +419,6 @@ public:
 	{
 	}
 
-	/**
-	Constructor called by the game when the renderer is first created.
-	\note Required to compile for Unreal Tournament.
-	\note Binding settings to the preferences window needs to done here instead of in init() or the game crashes when starting a map if the renderer's been restarted at least once.
-	*/
-	// ReSharper disable once CppHidingFunction
-	void StaticConstructor()
-	{
-	}
-
 	void InitVulkanInstance()
 	{
 		vk::ApplicationInfo appInfo;
@@ -497,6 +537,10 @@ private:
 		vk::PhysicalDeviceProperties deviceProperties;
 		size_t renderingQueueFamilyIndex;
 		size_t presentationQueueFamilyIndex;
+
+		vk::SurfaceCapabilitiesKHR presentationSurfaceCaps;
+		std::vector<vk::SurfaceFormatKHR> presentationSurfaceFormats;
+		std::vector<vk::PresentModeKHR> presentationModes;
 	};
 
 
@@ -552,6 +596,17 @@ private:
 		return VK_FALSE;
 	}
 
+	static constexpr vk::PresentModeKHR ToVulkanMode(PresentationMode presentationMode)
+	{
+		switch (presentationMode)
+		{
+		case PresentationMode::Immediate: return vk::PresentModeKHR::eImmediate;
+		case PresentationMode::VSyncDoubleBuffering: return vk::PresentModeKHR::eFifo;
+		case PresentationMode::RelaxedVSyncDoubleBuffering: return vk::PresentModeKHR::eFifoRelaxed;
+		case PresentationMode::VSyncTripleBuffering: return vk::PresentModeKHR::eMailbox;
+		default: throw std::runtime_error("Unknown presentation mode");
+		}
+	}
 
 	[[nodiscard]] std::optional<DeviceSearchResult> FindRequiredPhysicalDevice(
 		const std::vector<vk::PhysicalDevice>& physicalDevices,
@@ -571,6 +626,27 @@ private:
 			if (!boost::includes(
 				extensionProperties | boost::adaptors::transformed([](const vk::ExtensionProperties& props) { return std::string_view(props.extensionName); }),
 				requiredExtensions))
+			{
+				continue;
+			}
+
+			auto presentationSurfaceFormats = physicalDevice.getSurfaceFormatsKHR(presentationSurface);
+
+			if (!utils::contains(
+				presentationSurfaceFormats,
+				[](const vk::SurfaceFormatKHR& format)
+				{
+					return format.format == vk::Format::eB8G8R8A8Unorm && format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear;
+				}))
+			{
+				continue;
+			}
+
+			auto presentationSurfaceCaps = physicalDevice.getSurfaceCapabilitiesKHR(presentationSurface);
+
+			auto presentationModes = physicalDevice.getSurfacePresentModesKHR(presentationSurface);
+
+			if (!utils::contains(presentationModes, [this](const vk::PresentModeKHR mode) { return mode == ToVulkanMode(settings_.presentationMode); }))
 			{
 				continue;
 			}
@@ -599,11 +675,20 @@ private:
 			if (!suitablePresentationQueue)
 				continue;
 
-			return DeviceSearchResult{physicalDevice, properties, size_t(suitableQueueFamily->index()), size_t(suitablePresentationQueue->index())};
+			return DeviceSearchResult{
+				physicalDevice,
+				properties,
+				size_t(suitableQueueFamily->index()),
+				size_t(suitablePresentationQueue->index()),
+				std::move(presentationSurfaceCaps),
+				std::move(presentationSurfaceFormats),
+				std::move(presentationModes)
+			};
 		}
 
 		return std::nullopt;
 	}
+
 
 	void InitLogicalDevice(UViewport* inViewport)
 	{
@@ -614,7 +699,7 @@ private:
 			.setHinstance(GetModuleHandle(nullptr))
 			.setHwnd(static_cast<HWND>(inViewport->GetWindow()));
 
-		const auto presentationSurface = instance_.createWin32SurfaceKHR(surfaceInfo);
+		auto presentationSurface = instance_.createWin32SurfaceKHR(surfaceInfo);
 
 		const auto physicalDevices = instance_.enumeratePhysicalDevices();
 		if (physicalDevices.empty())
@@ -658,13 +743,110 @@ private:
 			.setQueueCreateInfoCount(queueInfos.size())
 			.setPEnabledFeatures(&features));
 
+		physicalDevice_ = deviceSearchResult->device;
 		presentationQueueFamilyIndex_ = deviceSearchResult->presentationQueueFamilyIndex;
 		renderingQueueFamilyIndex_ = deviceSearchResult->renderingQueueFamilyIndex;
 
 		renderingQueue_ = logicalDevice_.getQueue(renderingQueueFamilyIndex_, 0);
 		presentationQueue_ = logicalDevice_.getQueue(presentationQueueFamilyIndex_, 0);
 
+		presentationSurface_ = std::move(presentationSurface);
+		presentationSurfaceCaps_ = physicalDevice_.getSurfaceCapabilitiesKHR(presentationSurface_);
+		availablePresentationSurfaceFormats_ = physicalDevice_.getSurfaceFormatsKHR(presentationSurface_);
+		availablePresentationModes_ = physicalDevice_.getSurfacePresentModesKHR(presentationSurface_);
+
 		DebugPrint("Device created.");
+	}
+
+
+	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities)
+	{
+		if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
+		{
+			return capabilities.currentExtent;
+		}
+		else
+		{
+			// This case was simply copy-pasted from https://vulkan-tutorial.com/en/Drawing_a_triangle/Presentation/Swap_chain
+			// So it makes sense to rewrite it
+			VkExtent2D actualExtent = {640, 480};
+
+			actualExtent.width = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actualExtent.width));
+			actualExtent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actualExtent.height));
+
+			return actualExtent;
+		}
+	}
+
+
+	void InitSwapChain()
+	{
+		const auto preferredFormat = utils::maybeFirst(
+			availablePresentationSurfaceFormats_,
+			[](const vk::SurfaceFormatKHR& format)
+			{
+				return format.format == vk::Format::eB8G8R8A8Unorm && format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear;
+			});
+
+		const auto extent = chooseSwapExtent(presentationSurfaceCaps_);
+
+		const size_t imageCount = settings_.presentationMode == PresentationMode::VSyncTripleBuffering ? 3 : 2;
+
+		vk::SwapchainCreateInfoKHR swapChainCreateInfo;
+		swapChainCreateInfo
+			.setSurface(presentationSurface_)
+			.setImageFormat(preferredFormat->format)
+			.setImageColorSpace(preferredFormat->colorSpace)
+			.setImageExtent(extent)
+			.setPresentMode(ToVulkanMode(settings_.presentationMode))
+			.setMinImageCount(imageCount)
+			.setImageArrayLayers(1)
+			.setImageUsage(vk::ImageUsageFlagBits::eColorAttachment)
+			.setPreTransform(presentationSurfaceCaps_.currentTransform)
+			.setCompositeAlpha(vk::CompositeAlphaFlagBitsKHR::eOpaque)
+			.setClipped(true);
+
+		if (renderingQueueFamilyIndex_ == presentationQueueFamilyIndex_)
+		{
+			swapChainCreateInfo.setImageSharingMode(vk::SharingMode::eExclusive);
+
+			swapChain_ = logicalDevice_.createSwapchainKHR(swapChainCreateInfo);
+		}
+		else
+		{
+			const auto queueFamilyIndices = utils::make_array<size_t>(renderingQueueFamilyIndex_, presentationQueueFamilyIndex_);
+
+			swapChainCreateInfo
+				.setImageSharingMode(vk::SharingMode::eConcurrent)
+				.setPQueueFamilyIndices(queueFamilyIndices.data())
+				.setQueueFamilyIndexCount(queueFamilyIndices.size());
+
+			swapChain_ = logicalDevice_.createSwapchainKHR(swapChainCreateInfo);
+		}
+
+		DebugPrint("Swapchain created.");
+
+		presentationSurfaceExtent_ = extent;
+		presentationSurfaceFormat_ = preferredFormat->format;
+		swapChainImages_ = utils::to_vector(
+			logicalDevice_.getSwapchainImagesKHR(swapChain_) | boost::adaptors::transformed(
+				[&](const vk::Image& image)
+				{
+					return SwapChainImage{
+						image,
+						logicalDevice_.createImageView(
+							vk::ImageViewCreateInfo()
+							.setImage(image)
+							.setFormat(this->presentationSurfaceFormat_)
+							.setViewType(vk::ImageViewType::e2D)
+							.setSubresourceRange(
+								vk::ImageSubresourceRange()
+								.setLayerCount(1)
+								.setLevelCount(1)
+								.setAspectMask(vk::ImageAspectFlagBits::eColor)))
+					};
+				})
+		);
 	}
 
 

@@ -46,6 +46,12 @@ namespace utils
 		return boost::copy_range<std::unordered_set<typename TRange::value_type>>(range);
 	}
 
+	template <class TRange>
+	auto to_vector(const TRange& range)
+	{
+		return boost::copy_range<std::vector<typename TRange::value_type>>(range);
+	}
+
 	template <class TIteratorBegin, class TIteratorEnd, class TPredicate>
 	auto maybeFirst(
 		TIteratorBegin begin,
@@ -66,14 +72,14 @@ namespace utils
 	}
 
 	template <class TCollection, class TPredicate>
-	auto maybeFirst(TCollection collection, const TPredicate& predicate)
+	auto maybeFirst(TCollection&& collection, const TPredicate& predicate)
 	{
 		return maybeFirst(std::begin(collection), std::end(collection), predicate);
 	}
 
 	template <class TCollection, class TPredicate>
-	bool contains(TCollection collection, const TPredicate& predicate)
+	bool contains(TCollection&& collection, const TPredicate& predicate)
 	{
-		return maybeFirst(std::begin(collection), std::end(collection), predicate);
+		return maybeFirst(std::begin(collection), std::end(collection), predicate).has_value();
 	}
 }

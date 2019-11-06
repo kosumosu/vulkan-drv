@@ -14,6 +14,7 @@
     <ClInclude Include="polyflags.h" />
     <ClInclude Include="ProperWindows.h" />
     <ClInclude Include="utils.hpp" />
+    <ClInclude Include="RendererSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res.rc">
