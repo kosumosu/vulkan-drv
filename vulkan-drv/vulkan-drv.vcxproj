@@ -389,6 +389,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Deus Ex Debug|Win32'">$(OntDir)%(Filename)%(Extension).spv</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Deus Ex Debug|Win32'">false</LinkObjects>
     </CustomBuild>
+    <ClInclude Include="SelfDestroyable.h" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="polyflags.h" />
     <ClInclude Include="ProperWindows.h" />

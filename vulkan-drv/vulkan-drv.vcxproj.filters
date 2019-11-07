@@ -18,6 +18,7 @@
     <ClInclude Include="ProperWindows.h" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="RendererSettings.h" />
+    <ClInclude Include="SelfDestroyable.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res.rc">

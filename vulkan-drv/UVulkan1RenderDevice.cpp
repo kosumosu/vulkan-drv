@@ -1,9 +1,13 @@
 //#include "UVulkan1RenderDevice.h"
-#include "resource.h"
-#include "utils.hpp"
+
 #include "RendererSettings.h"
+#include "SelfDestroyable.h"
+
+#include "utils.hpp"
 
 #include "ProperWindows.h"
+#include "resource.h"
+
 #include <Engine.h>
 #include <UnRender.h>
 
@@ -17,6 +21,8 @@
 #include <optional>
 #include <sstream>
 #include <unordered_set>
+#include <fstream>
+#include <filesystem>
 
 using namespace std::string_literals;
 
@@ -141,6 +147,8 @@ DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 
 			InitLogicalDevice(InViewport);
 
+			InitPipeline();
+
 			//renderingCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(renderingQueueFamilyIndex_));
 			//presentationCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(presentationQueueFamilyIndex_));
 
@@ -187,7 +195,7 @@ DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 		{
 			logicalDevice_.destroyImageView(swapChainImage.view);
 		}
-		
+
 		logicalDevice_.destroySwapchainKHR(swapChain_);
 		logicalDevice_.destroy();
 		instance_.destroyDebugReportCallbackEXT(debugCallbackHandle_);
@@ -849,6 +857,46 @@ private:
 		);
 	}
 
+	void InitPipeline()
+	{
+		const auto vertexShader = makeSelfDestroyable(
+			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.vert.spv").wstring().c_str()),
+			[&](vk::ShaderModule& shader) { logicalDevice_.destroyShaderModule(shader); });
+		const auto fragmentShader = makeSelfDestroyable(
+			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.frag.spv").wstring().c_str()),
+			[&](vk::ShaderModule& shader) { logicalDevice_.destroyShaderModule(shader); });
+
+
+		
+	}
+
+	std::vector<uint32_t> ReadFile(const wchar_t* path)
+	{
+		std::ifstream fileStream(path, std::ios::ate | std::ios::binary);
+
+		if (!fileStream.is_open())
+			throw std::runtime_error("Shader file not found");
+
+		const size_t fileSize = fileStream.tellg();
+		fileStream.seekg(0);
+
+		if (fileSize % sizeof(size_t) != 0)
+			throw std::runtime_error("Shader file size is not a multiple of 4"); // meh, it contains hardcoded number
+
+		std::vector<uint32_t> buffer(fileSize / sizeof(uint32_t));
+
+		fileStream.read(reinterpret_cast<char*>(buffer.data()), fileSize);
+
+		return buffer;
+	}
+
+	vk::ShaderModule LoadShaderModule(const wchar_t* path)
+	{
+		const auto data = ReadFile(path);
+
+		return logicalDevice_.createShaderModule(
+			vk::ShaderModuleCreateInfo().setPCode(data.data()).setCodeSize(data.size() * sizeof(decltype(data)::value_type)));
+	}
 
 	template <class ... TArgs>
 	static void DebugPrint(const TArgs&... args)
