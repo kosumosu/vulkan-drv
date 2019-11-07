@@ -8,6 +8,9 @@
     <Filter Include="Misc">
       <UniqueIdentifier>{297383a7-07e8-4f88-aad7-64250748af20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{d7033180-e697-4ab2-8dcc-be546e237f8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -29,5 +32,13 @@
   <ItemGroup>
     <ClCompile Include="UVulkan1RenderDevice.cpp" />
     <ClCompile Include="VulkanFunctions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="shader.vert">
+      <Filter>Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="shader.frag">
+      <Filter>Shaders</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

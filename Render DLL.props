@@ -20,14 +20,15 @@
       <AdditionalDependencies>../games/$(GAMENAME)/engine/lib/engine.lib;../games/$(GAMENAME)/core/lib/core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-copy "$(ProjectDir)$(TargetName).int" "$(GAMEDIR)\system\"
-copy "$(TargetPath)" "$(GAMEDIR)\system\"
+      <Command>mkdir "$(OutDir)packages\$(GAMENAME)\"
+mkdir "$(OutDir)packages\$(GAMENAME)\$(DriverName)"
 
-mkdir "$(OutDir)packages\$(GAMENAME)"
-copy "$(ProjectDir)$(TargetName).int" "$(OutDir)packages\$(GAMENAME)"
-copy "$(TargetPath)" "$(OutDir)packages\$(GAMENAME)"
-</Command>
+copy "$(ProjectDir)$(TargetName).int" "$(OutDir)packages\$(GAMENAME)\"
+copy "$(TargetPath)" "$(OutDir)packages\$(GAMENAME)\"
+
+copy "$(OutDir)*.spv" "$(OutDir)packages\$(GAMENAME)\$(DriverName)"
+
+xcopy "$(OutDir)packages\$(GAMENAME)" "$(GAMEDIR)\system\" /s /e /y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command />
