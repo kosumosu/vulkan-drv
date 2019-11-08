@@ -859,15 +859,18 @@ private:
 
 	void InitPipeline()
 	{
-		const auto vertexShader = makeSelfDestroyable(
+		const auto vertexShaderModule = makeSelfDestroyable(
 			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.vert.spv").wstring().c_str()),
 			[&](vk::ShaderModule& shader) { logicalDevice_.destroyShaderModule(shader); });
-		const auto fragmentShader = makeSelfDestroyable(
+		const auto fragmentShaderModule = makeSelfDestroyable(
 			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.frag.spv").wstring().c_str()),
 			[&](vk::ShaderModule& shader) { logicalDevice_.destroyShaderModule(shader); });
 
 
-		
+		std::array<vk::PipelineShaderStageCreateInfo, 2> shaderStageCreateInfos = {
+			vk::PipelineShaderStageCreateInfo({}, vk::ShaderStageFlagBits::eVertex, *vertexShaderModule, "main"),
+			vk::PipelineShaderStageCreateInfo({}, vk::ShaderStageFlagBits::eFragment, *fragmentShaderModule, "main"),
+		};
 	}
 
 	std::vector<uint32_t> ReadFile(const wchar_t* path)

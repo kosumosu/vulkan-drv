@@ -30,6 +30,16 @@ public:
 		deleter_(static_cast<TParent&>(*this));
 	}
 
+	TParent& operator *()
+	{
+		return *this;
+	}
+
+	const TParent& operator *() const
+	{
+		return *this;
+	}
+	
 	SelfDestroyable(const SelfDestroyable& other) = delete;
 	SelfDestroyable(SelfDestroyable&& other) noexcept = default;
 	SelfDestroyable& operator=(const SelfDestroyable& other) = delete;
