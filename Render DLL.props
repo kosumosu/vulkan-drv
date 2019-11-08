@@ -12,7 +12,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>../games/$(GAMENAME)/engine/inc;../games/$(GAMENAME)/core/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_REALLY_WANT_DEBUG;DRIVER_DATA_DIRECTORY_NAME="$(DriverName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;NOMINMAX;_REALLY_WANT_DEBUG;DRIVER_DATA_DIRECTORY_NAME="$(DriverName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StructMemberAlignment>4Bytes</StructMemberAlignment>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
     </ClCompile>
