@@ -15,10 +15,10 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="polyflags.h" />
-    <ClInclude Include="ProperWindows.h" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="RendererSettings.h" />
     <ClInclude Include="SelfDestroyable.h" />
+    <ClInclude Include="Pipeline.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res.rc">

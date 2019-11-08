@@ -381,6 +381,7 @@
     <ClCompile Include="VulkanFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Pipeline.h" />
     <ClInclude Include="RendererSettings.h" />
     <CustomBuild Include="shader.vert">
       <FileType>Document</FileType>
@@ -392,7 +393,6 @@
     <ClInclude Include="SelfDestroyable.h" />
     <ClInclude Include="utils.hpp" />
     <ClInclude Include="polyflags.h" />
-    <ClInclude Include="ProperWindows.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
