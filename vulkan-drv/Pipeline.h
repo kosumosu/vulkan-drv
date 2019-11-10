@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SelfDestroyable.h"
+#include "Bundle.h"
 
 #include "utils.hpp"
 
@@ -10,49 +11,131 @@
 
 #include <filesystem>
 #include <fstream>
+#include <memory>
 
-class Pipeline // : private boost::noncopyable
+class Pipeline : boost::noncopyable
 {
-	vk::Device& device_;
+	vk::Device device_;
+	vk::Extent2D viewportExtent_;
 
-public:
-	explicit Pipeline(vk::Device& device)
-		: device_(device)
+	[[nodiscard]] auto GetViewportStateCreateInfo() const
 	{
-		const auto vertexShaderModule = makeSelfDestroyable(
+		auto viewport = vk::Viewport()
+		                      .setWidth(float(viewportExtent_.width))
+		                      .setHeight(float(viewportExtent_.height))
+		                      .setMinDepth(0.0f)
+		                      .setMaxDepth(1.0f);
+		vk::Rect2D scissors({0, 0}, viewportExtent_);
+
+		return makeBundle(
+			[](auto& viewport, auto& scissors)
+			{
+				return vk::PipelineViewportStateCreateInfo().setViewportCount(1).setPViewports(&viewport).setScissorCount(1).setPScissors(&scissors);
+			},
+			std::move(viewport),
+			std::move(scissors));
+	}
+
+	[[nodiscard]] auto GetShaderStageCreateInfos() const
+	{
+		// TODO FIX REFERENCE TO TEMPORARY!!!
+		auto vertexShaderModule = makeSelfDestroyable(
 			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.vert.spv").wstring().c_str()),
-			[&](vk::ShaderModule& shader) { device_.destroyShaderModule(shader); });
-		const auto fragmentShaderModule = makeSelfDestroyable(
+			[&](vk::ShaderModule& shader)
+		{
+			device_.destroyShaderModule(shader);
+		});
+		auto fragmentShaderModule = makeSelfDestroyable(
 			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.frag.spv").wstring().c_str()),
-			[&](vk::ShaderModule& shader) { device_.destroyShaderModule(shader); });
+			[&](vk::ShaderModule& shader)
+		{
+			device_.destroyShaderModule(shader);
+		});
 
+		return makeBundle(
+			[](auto& vertexModule, auto& fragmentModule) -> std::array<vk::PipelineShaderStageCreateInfo, 2>
+			{
+				return {
+					vk::PipelineShaderStageCreateInfo({}, vk::ShaderStageFlagBits::eVertex, *vertexModule, "main"),
+					vk::PipelineShaderStageCreateInfo({}, vk::ShaderStageFlagBits::eFragment, *fragmentModule, "main")
+				};
+			},
+			std::move(vertexShaderModule),
+			std::move(fragmentShaderModule));
+	}
 
-		const auto shaderStageCreateInfos = utils::make_array<vk::PipelineShaderStageCreateInfo>(
-			vk::PipelineShaderStageCreateInfo({}, vk::ShaderStageFlagBits::eVertex, *vertexShaderModule, "main"),
-			vk::PipelineShaderStageCreateInfo({}, vk::ShaderStageFlagBits::eFragment, *fragmentShaderModule, "main")
+	[[nodiscard]] vk::PipelineVertexInputStateCreateInfo GetVertexInputStateCreateInfo() const
+	{
+		return vk::PipelineVertexInputStateCreateInfo();
+	}
+
+	[[nodiscard]] vk::PipelineInputAssemblyStateCreateInfo GetInputAssemblyStateCreateInfo() const
+	{
+		return vk::PipelineInputAssemblyStateCreateInfo().setPrimitiveRestartEnable(false).setTopology(vk::PrimitiveTopology::eTriangleList);
+	}
+
+	[[nodiscard]] vk::PipelineRasterizationStateCreateInfo GetRasterizationStateCreateInfo() const
+	{
+		return vk::PipelineRasterizationStateCreateInfo()
+		       .setPolygonMode(vk::PolygonMode::eFill)
+		       .setLineWidth(1.0f)
+		       .setCullMode(vk::CullModeFlagBits::eBack)
+		       .setFrontFace(vk::FrontFace::eClockwise); // TODO: investigate order
+	}
+
+	[[nodiscard]] vk::PipelineMultisampleStateCreateInfo GetMultisampleStateCreateInfo() const
+	{
+		return vk::PipelineMultisampleStateCreateInfo().setSampleShadingEnable(false).setMinSampleShading(1.0f).setRasterizationSamples(
+			vk::SampleCountFlagBits::e1);
+	}
+
+	[[nodiscard]] vk::PipelineDepthStencilStateCreateInfo GetDepthStencilStateCreateInfo() const
+	{
+		return vk::PipelineDepthStencilStateCreateInfo();
+	}
+
+	[[nodiscard]] auto GetColorBlendStateCreateInfo() const
+	{
+		auto attachmentState = vk::PipelineColorBlendAttachmentState()
+		                             .setColorWriteMask(
+			                             vk::ColorComponentFlagBits::eA
+			                             | vk::ColorComponentFlagBits::eR
+			                             | vk::ColorComponentFlagBits::eG
+			                             | vk::ColorComponentFlagBits::eB)
+		                             .setBlendEnable(true)
+		                             .setColorBlendOp(vk::BlendOp::eAdd)
+		                             .setSrcColorBlendFactor(vk::BlendFactor::eSrcAlpha)
+		                             .setDstColorBlendFactor(vk::BlendFactor::eOneMinusSrcAlpha)
+		                             .setAlphaBlendOp(vk::BlendOp::eAdd)
+		                             .setSrcAlphaBlendFactor(vk::BlendFactor::eOne)
+		                             .setDstAlphaBlendFactor(vk::BlendFactor::eZero);
+
+		return makeBundle(
+			[](auto& attachmentState)
+			{
+				return vk::PipelineColorBlendStateCreateInfo().setAttachmentCount(1).setPAttachments(&attachmentState).setLogicOpEnable(false).
+				                                               setBlendConstants({});
+			},
+			std::move(attachmentState)
 		);
 	}
 
-	Pipeline(Pipeline&& other) noexcept
-		: device_(other.device_)
+	[[nodiscard]] vk::ShaderModule LoadShaderModule(const wchar_t* path) const
 	{
+		const auto data = ReadFile(path);
+
+		return device_.createShaderModule(
+			vk::ShaderModuleCreateInfo().setPCode(data.data()).setCodeSize(data.size() * sizeof(decltype(data)::value_type)));
 	}
 
-	Pipeline& operator=(Pipeline&& other) noexcept
-	{
-		return *this;
-	}
-
-private:
-
-	std::vector<uint32_t> ReadFile(const wchar_t* path)
+	[[nodiscard]] std::vector<uint32_t> ReadFile(const wchar_t* path) const
 	{
 		std::ifstream fileStream(path, std::ios::ate | std::ios::binary);
 
 		if (!fileStream.is_open())
 			throw std::runtime_error("Shader file not found");
 
-		const size_t fileSize = fileStream.tellg();
+		const size_t fileSize = size_t(fileStream.tellg());
 		fileStream.seekg(0);
 
 		if (fileSize % sizeof(size_t) != 0)
@@ -65,11 +148,37 @@ private:
 		return buffer;
 	}
 
-	vk::ShaderModule LoadShaderModule(const wchar_t* path)
+public:
+	explicit Pipeline(vk::Device device, vk::Extent2D viewportExtent)
+		: device_(device)
+		, viewportExtent_(std::move(viewportExtent))
 	{
-		const auto data = ReadFile(path);
+		const auto shaderStageCreateInfos = GetShaderStageCreateInfos();
+		const auto vertexInputStateCreateInfo = GetVertexInputStateCreateInfo();
+		const auto inputAssemblyStateCreateInfo = GetInputAssemblyStateCreateInfo();
+		const auto viewportStateCreateInfo = GetViewportStateCreateInfo();
+		const auto rasterizationStateCreateInfo = GetRasterizationStateCreateInfo();
+		const auto multisampleStateCreateInfo = GetMultisampleStateCreateInfo();
+		const auto depthStencilStateCreateInfo = GetDepthStencilStateCreateInfo(); // Tutorial passes nullptr for it
+	}
 
-		return device_.createShaderModule(
-			vk::ShaderModuleCreateInfo().setPCode(data.data()).setCodeSize(data.size() * sizeof(decltype(data)::value_type)));
+	Pipeline(Pipeline&& other) noexcept
+		: device_(other.device_)
+		, viewportExtent_(other.viewportExtent_)
+	{
+	}
+
+	Pipeline& operator=(Pipeline&& other) noexcept
+	{
+		device_ = other.device_;
+		viewportExtent_ = other.viewportExtent_;
+
+
+		return *this;
+	}
+
+	~Pipeline()
+	{
+		//TODO
 	}
 };

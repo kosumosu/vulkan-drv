@@ -102,8 +102,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Deus Ex Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -381,6 +381,7 @@
     <ClCompile Include="VulkanFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bundle.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="RendererSettings.h" />
     <CustomBuild Include="shader.vert">

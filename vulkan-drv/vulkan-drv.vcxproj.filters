@@ -19,6 +19,7 @@
     <ClInclude Include="RendererSettings.h" />
     <ClInclude Include="SelfDestroyable.h" />
     <ClInclude Include="Pipeline.h" />
+    <ClInclude Include="Bundle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res.rc">

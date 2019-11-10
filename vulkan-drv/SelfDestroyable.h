@@ -3,49 +3,65 @@
 #include <memory>
 
 template <class TParent, class TDeleter>
-class SelfDestroyable : public TParent
+class SelfDestroyable
 {
-public:
-	template <class ...TArgs>
-	SelfDestroyable(TArgs&& ... args, TDeleter deleter)
-		: TParent(args)
-		, deleter_(std::move(deleter))
-	{
-	}
+	TParent parent_;
+	TDeleter deleter_;
+	bool isEmpty_ = true;
 
+public:
 	SelfDestroyable(const TParent& parent, TDeleter deleter)
-		: TParent(parent)
+		: parent_(parent)
 		, deleter_(std::move(deleter))
+		, isEmpty_(false)
 	{
 	}
 
 	SelfDestroyable(TParent&& parent, TDeleter deleter)
-		: TParent(std::move(parent))
+		: parent_(std::move(parent))
 		, deleter_(std::move(deleter))
+		, isEmpty_(false)
 	{
 	}
 
 	~SelfDestroyable()
 	{
-		deleter_(static_cast<TParent&>(*this));
+		if (!isEmpty_)
+			deleter_(parent_);
 	}
 
 	TParent& operator *()
 	{
-		return *this;
+		return parent_;
 	}
 
 	const TParent& operator *() const
 	{
-		return *this;
+		return parent_;
 	}
-	
+
+	TParent* operator ->()
+	{
+		return &parent_;
+	}
+
+	const TParent* operator ->() const
+	{
+		return &parent_;
+	}
+
 	SelfDestroyable(const SelfDestroyable& other) = delete;
-	SelfDestroyable(SelfDestroyable&& other) noexcept = default;
+
+	SelfDestroyable(SelfDestroyable&& other) noexcept
+		: parent_(std::move(other.parent_))
+		, deleter_(std::move(other.deleter_))
+		, isEmpty_(false)
+	{
+		other.isEmpty_ = true;
+	}
+
 	SelfDestroyable& operator=(const SelfDestroyable& other) = delete;
-	SelfDestroyable& operator=(SelfDestroyable&& other) noexcept = default;
-private:
-	TDeleter deleter_;
+	SelfDestroyable& operator=(SelfDestroyable&& other) noexcept = delete;
 };
 
 

@@ -863,7 +863,7 @@ private:
 
 	void InitPipeline()
 	{
-		pipeline_ = std::make_optional(Pipeline(logicalDevice_));
+		pipeline_ = std::make_optional(Pipeline(logicalDevice_, this->presentationSurfaceExtent_.width));
 	}
 
 
