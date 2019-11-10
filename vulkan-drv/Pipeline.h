@@ -18,13 +18,15 @@ class Pipeline : boost::noncopyable
 	vk::Device device_;
 	vk::Extent2D viewportExtent_;
 
+	vk::PipelineLayout pipelineLayout_;
+
 	[[nodiscard]] auto GetViewportStateCreateInfo() const
 	{
 		auto viewport = vk::Viewport()
-		                      .setWidth(float(viewportExtent_.width))
-		                      .setHeight(float(viewportExtent_.height))
-		                      .setMinDepth(0.0f)
-		                      .setMaxDepth(1.0f);
+		                .setWidth(float(viewportExtent_.width))
+		                .setHeight(float(viewportExtent_.height))
+		                .setMinDepth(0.0f)
+		                .setMaxDepth(1.0f);
 		vk::Rect2D scissors({0, 0}, viewportExtent_);
 
 		return makeBundle(
@@ -42,15 +44,15 @@ class Pipeline : boost::noncopyable
 		auto vertexShaderModule = makeSelfDestroyable(
 			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.vert.spv").wstring().c_str()),
 			[&](vk::ShaderModule& shader)
-		{
-			device_.destroyShaderModule(shader);
-		});
+			{
+				device_.destroyShaderModule(shader);
+			});
 		auto fragmentShaderModule = makeSelfDestroyable(
 			LoadShaderModule((std::filesystem::path(DRIVER_DATA_DIRECTORY_NAME) / "shader.frag.spv").wstring().c_str()),
 			[&](vk::ShaderModule& shader)
-		{
-			device_.destroyShaderModule(shader);
-		});
+			{
+				device_.destroyShaderModule(shader);
+			});
 
 		return makeBundle(
 			[](auto& vertexModule, auto& fragmentModule) -> std::array<vk::PipelineShaderStageCreateInfo, 2>
@@ -97,18 +99,18 @@ class Pipeline : boost::noncopyable
 	[[nodiscard]] auto GetColorBlendStateCreateInfo() const
 	{
 		auto attachmentState = vk::PipelineColorBlendAttachmentState()
-		                             .setColorWriteMask(
-			                             vk::ColorComponentFlagBits::eA
-			                             | vk::ColorComponentFlagBits::eR
-			                             | vk::ColorComponentFlagBits::eG
-			                             | vk::ColorComponentFlagBits::eB)
-		                             .setBlendEnable(true)
-		                             .setColorBlendOp(vk::BlendOp::eAdd)
-		                             .setSrcColorBlendFactor(vk::BlendFactor::eSrcAlpha)
-		                             .setDstColorBlendFactor(vk::BlendFactor::eOneMinusSrcAlpha)
-		                             .setAlphaBlendOp(vk::BlendOp::eAdd)
-		                             .setSrcAlphaBlendFactor(vk::BlendFactor::eOne)
-		                             .setDstAlphaBlendFactor(vk::BlendFactor::eZero);
+		                       .setColorWriteMask(
+			                       vk::ColorComponentFlagBits::eA
+			                       | vk::ColorComponentFlagBits::eR
+			                       | vk::ColorComponentFlagBits::eG
+			                       | vk::ColorComponentFlagBits::eB)
+		                       .setBlendEnable(true)
+		                       .setColorBlendOp(vk::BlendOp::eAdd)
+		                       .setSrcColorBlendFactor(vk::BlendFactor::eSrcAlpha)
+		                       .setDstColorBlendFactor(vk::BlendFactor::eOneMinusSrcAlpha)
+		                       .setAlphaBlendOp(vk::BlendOp::eAdd)
+		                       .setSrcAlphaBlendFactor(vk::BlendFactor::eOne)
+		                       .setDstAlphaBlendFactor(vk::BlendFactor::eZero);
 
 		return makeBundle(
 			[](auto& attachmentState)
@@ -118,6 +120,18 @@ class Pipeline : boost::noncopyable
 			},
 			std::move(attachmentState)
 		);
+	}
+
+	[[nodiscard]] auto GetDynamicStateCreateInfo() const
+	{
+		auto states = utils::make_array<vk::DynamicState>(vk::DynamicState::eBlendConstants, vk::DynamicState::eViewport);
+
+		return makeBundle(
+			[](auto& states)
+			{
+				return vk::PipelineDynamicStateCreateInfo().setDynamicStateCount(states.size()).setPDynamicStates(states.data());
+			},
+			std::move(states));
 	}
 
 	[[nodiscard]] vk::ShaderModule LoadShaderModule(const wchar_t* path) const
@@ -148,18 +162,27 @@ class Pipeline : boost::noncopyable
 		return buffer;
 	}
 
+	void CreatePipelineLayout()
+	{
+		pipelineLayout_ = device_.createPipelineLayout(vk::PipelineLayoutCreateInfo());
+	}
+
 public:
 	explicit Pipeline(vk::Device device, vk::Extent2D viewportExtent)
 		: device_(device)
 		, viewportExtent_(std::move(viewportExtent))
 	{
-		const auto shaderStageCreateInfos = GetShaderStageCreateInfos();
-		const auto vertexInputStateCreateInfo = GetVertexInputStateCreateInfo();
-		const auto inputAssemblyStateCreateInfo = GetInputAssemblyStateCreateInfo();
-		const auto viewportStateCreateInfo = GetViewportStateCreateInfo();
-		const auto rasterizationStateCreateInfo = GetRasterizationStateCreateInfo();
-		const auto multisampleStateCreateInfo = GetMultisampleStateCreateInfo();
-		const auto depthStencilStateCreateInfo = GetDepthStencilStateCreateInfo(); // Tutorial passes nullptr for it
+		const auto shaderStages = GetShaderStageCreateInfos();
+		const auto vertexInput = GetVertexInputStateCreateInfo();
+		const auto inputAssembly = GetInputAssemblyStateCreateInfo();
+		const auto viewport = GetViewportStateCreateInfo();
+		const auto rasterization = GetRasterizationStateCreateInfo();
+		const auto multisample = GetMultisampleStateCreateInfo();
+		const auto depthStencil = GetDepthStencilStateCreateInfo(); // Tutorial passes nullptr for it
+		const auto colorBlend = GetColorBlendStateCreateInfo();
+		const auto dynamicState = GetDynamicStateCreateInfo();
+
+		CreatePipelineLayout();
 	}
 
 	Pipeline(Pipeline&& other) noexcept
@@ -179,6 +202,7 @@ public:
 
 	~Pipeline()
 	{
+		device_.destroyPipelineLayout(pipelineLayout_);
 		//TODO
 	}
 };
