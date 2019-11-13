@@ -32,7 +32,9 @@ struct SwapChainImage
 	vk::ImageView view;
 };
 
-class UVulkan1RenderDevice final : public URenderDevice, private boost::noncopyable
+class UVulkan1RenderDevice final
+	: public URenderDevice
+	, private boost::noncopyable
 {
 private:
 	RendererSettings settings_;
@@ -62,8 +64,9 @@ private:
 
 	vk::DebugReportCallbackEXT debugCallbackHandle_;
 
+	vk::RenderPass renderPass_;
 	std::optional<Pipeline> pipeline_;
-	
+
 public:
 
 	/**
@@ -149,8 +152,6 @@ DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 
 			InitLogicalDevice(InViewport);
 
-			InitPipeline();
-
 			//renderingCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(renderingQueueFamilyIndex_));
 			//presentationCommandPool_ = logicalDevice_.createCommandPool(vk::CommandPoolCreateInfo().setQueueFamilyIndex(presentationQueueFamilyIndex_));
 
@@ -179,6 +180,12 @@ DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 		try
 		{
 			InitSwapChain();
+
+			// Because we need surface format first.
+			InitRenderPass();
+			
+			InitPipeline();
+
 			return true;
 		}
 		catch (const std::exception& ex)
@@ -199,7 +206,7 @@ DECLARE_CLASS(UVulkan1RenderDevice, URenderDevice, CLASS_Config)
 		}
 
 		pipeline_.reset();
-
+		logicalDevice_.destroyRenderPass(renderPass_);
 		logicalDevice_.destroySwapchainKHR(swapChain_);
 		logicalDevice_.destroy();
 		instance_.destroyDebugReportCallbackEXT(debugCallbackHandle_);
@@ -861,9 +868,37 @@ private:
 		);
 	}
 
+	void InitRenderPass()
+	{
+		const auto colorAttachment = vk::AttachmentDescription()
+		                             .setFormat(presentationSurfaceFormat_)
+		                             .setSamples(vk::SampleCountFlagBits::e1)
+		                             .setInitialLayout(vk::ImageLayout::eUndefined)
+		                             .setFinalLayout(vk::ImageLayout::ePresentSrcKHR)
+		                             .setLoadOp(vk::AttachmentLoadOp::eClear)
+		                             .setStoreOp(vk::AttachmentStoreOp::eStore)
+		                             .setStencilLoadOp(vk::AttachmentLoadOp::eDontCare)
+		                             .setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+
+		const auto colorAttachmentRef = vk::AttachmentReference().setAttachment(0).setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+
+		const auto subpass = vk::SubpassDescription()
+		                     .setPipelineBindPoint(vk::PipelineBindPoint::eGraphics)
+		                     .setColorAttachmentCount(1)
+		                     .setPColorAttachments(&colorAttachmentRef);
+
+		renderPass_ = logicalDevice_.createRenderPass(
+			vk::RenderPassCreateInfo()
+			.setAttachmentCount(1)
+			.setPAttachments(&colorAttachment)
+			.setSubpassCount(1)
+			.setPSubpasses(&subpass)
+		);
+	}
+
 	void InitPipeline()
 	{
-		pipeline_ = std::make_optional(Pipeline(logicalDevice_, this->presentationSurfaceExtent_.width));
+		pipeline_ = std::make_optional(Pipeline(logicalDevice_, presentationSurfaceExtent_, presentationSurfaceFormat_, renderPass_, 0));
 	}
 
 

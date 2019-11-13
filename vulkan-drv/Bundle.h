@@ -26,6 +26,37 @@ public:
 	Bundle(Bundle&& other) = delete;
 	Bundle& operator=(const Bundle& other) = delete;
 	Bundle& operator=(Bundle&& other) = delete;
+
+	TMain& operator*()
+	{
+		return main_;
+	}
+
+	const TMain& operator*() const
+	{
+		return main_;
+	}
+
+	TMain* operator->()
+	{
+		return &main_;
+	}
+
+	const TMain* operator->() const
+	{
+		return &main_;
+	}
+
+	TMain* get()
+	{
+		return &main_;
+	}
+
+	const TMain* get() const
+	{
+		return &main_;
+	}
+
 private:
 	template <class TMainFactory, class TTuple, std::size_t ...TIndices>
 	auto callFactory(const TMainFactory& mainFactory, const TTuple& tuple, std::index_sequence<TIndices...>) const

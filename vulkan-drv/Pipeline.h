@@ -17,8 +17,12 @@ class Pipeline : boost::noncopyable
 {
 	vk::Device device_;
 	vk::Extent2D viewportExtent_;
+	vk::Format presentationSurfaceFormat_;
+	vk::RenderPass renderPass_;
+	uint32_t subpassIndex_;
 
 	vk::PipelineLayout pipelineLayout_;
+	vk::Pipeline pipeline_;
 
 	[[nodiscard]] auto GetViewportStateCreateInfo() const
 	{
@@ -168,9 +172,13 @@ class Pipeline : boost::noncopyable
 	}
 
 public:
-	explicit Pipeline(vk::Device device, vk::Extent2D viewportExtent)
+
+	Pipeline(vk::Device device, vk::Extent2D viewportExtent, vk::Format presentationSurfaceFormat, vk::RenderPass renderPass, uint32_t subpassIndex)
 		: device_(device)
-		, viewportExtent_(std::move(viewportExtent))
+		, viewportExtent_(viewportExtent)
+		, presentationSurfaceFormat_(presentationSurfaceFormat)
+		, renderPass_(renderPass)
+		, subpassIndex_(subpassIndex)
 	{
 		const auto shaderStages = GetShaderStageCreateInfos();
 		const auto vertexInput = GetVertexInputStateCreateInfo();
@@ -183,25 +191,55 @@ public:
 		const auto dynamicState = GetDynamicStateCreateInfo();
 
 		CreatePipelineLayout();
+
+		pipeline_ = device_.createGraphicsPipeline(
+			{},
+			vk::GraphicsPipelineCreateInfo()
+			.setStageCount(shaderStages->size())
+			.setPStages(shaderStages->data())
+			.setPVertexInputState(&vertexInput)
+			.setPInputAssemblyState(&inputAssembly)
+			.setPViewportState(viewport.get())
+			.setPRasterizationState(&rasterization)
+			.setPMultisampleState(&multisample)
+			.setPDepthStencilState(&depthStencil)
+			.setPColorBlendState(colorBlend.get())
+			.setPDynamicState(dynamicState.get())
+			.setLayout(pipelineLayout_)
+			.setRenderPass(renderPass_)
+			.setSubpass(subpassIndex_)
+		);
 	}
 
 	Pipeline(Pipeline&& other) noexcept
 		: device_(other.device_)
 		, viewportExtent_(other.viewportExtent_)
+		, presentationSurfaceFormat_(other.presentationSurfaceFormat_)
+		, renderPass_(other.renderPass_)
+		, subpassIndex_(other.subpassIndex_)
+		, pipelineLayout_(other.pipelineLayout_)
+		, pipeline_(other.pipeline_)
 	{
+		other.pipelineLayout_ = {};
+		other.pipeline_ = {};
 	}
 
 	Pipeline& operator=(Pipeline&& other) noexcept
 	{
 		device_ = other.device_;
 		viewportExtent_ = other.viewportExtent_;
-
+		presentationSurfaceFormat_ = other.presentationSurfaceFormat_;
+		renderPass_ = other.renderPass_;
+		subpassIndex_ = other.subpassIndex_;
+		std::swap(pipelineLayout_, other.pipelineLayout_);
+		std::swap(pipeline_, other.pipeline_);
 
 		return *this;
 	}
 
 	~Pipeline()
 	{
+		device_.destroyPipeline(pipeline_);
 		device_.destroyPipelineLayout(pipelineLayout_);
 		//TODO
 	}
